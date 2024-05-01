@@ -1,6 +1,8 @@
 import React from 'react'
 import { cookies } from 'next/headers'
 import ProductList from '@/components/ui/ProductionList'
+import Tremor from '@/components/ui/Tremor'
+import SecondTremor from '@/components/ui/SecondTremor'
 
 const page = async () => {
 
@@ -51,6 +53,17 @@ const page = async () => {
         <div>
             <h2 className='text-black text-2xl font-semibold py-2'>Production</h2>
             <ProductList  data={data.data && data.data} stockData={stockData.data && stockData.data} warehouse={ warehouse.data && warehouse.data} />
+            <br />
+            <div className='w-full gap-3 flex'>
+                <div className='w-[50%] bg-black rounded-lg'>
+                    <SecondTremor/>
+                </div>
+                <div className=' w-[50%] rounded-lg' >
+                    <Tremor/>
+                </div>
+            </div>
+            
+           
         </div>
     )
 }
