@@ -74,7 +74,7 @@ const LeadsTable = ({data}) => {
                 ID
                 </th>
                 <th scope="col" className="px-6 py-3">
-                Company
+                Customer Full Name
                 </th>
                 <th scope="col" className="px-6 py-3">
                 Primary Contact

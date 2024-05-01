@@ -12,8 +12,11 @@ import {
   import { FaSitemap } from "react-icons/fa6";
   import { RiArrowDropLeftLine } from "react-icons/ri";
   import { RiArrowDropRightLine } from "react-icons/ri";
-
+  import { FaArrowAltCircleRight } from "react-icons/fa";
   import axios from 'axios'
+  import { Button } from "@/components/ui/button"
+
+
 
 const ProductList = ({data , warehouse , stockData}) => {
 
@@ -86,6 +89,17 @@ const ProductList = ({data , warehouse , stockData}) => {
 
 
     },[])
+
+
+
+
+    const handleStatusChange = async (id) => {
+      try{
+        alert(id)
+      }catch(error){
+        console.log(error)
+      }
+    }
     
 
 
@@ -113,10 +127,10 @@ const ProductList = ({data , warehouse , stockData}) => {
 
     return(
         <div>
-                <table className="table-auto w-full">
-                <thead className='bg-[#1C2333] text-white '>
+                <table className="table-auto w-full rounded-lg shadow-lg">
+                <thead className='bg-black p-2 text-white '>
                     <tr>
-                    <th>Multimedia</th>
+                    <th>ID</th>
                     <th>Emri</th>
                     <th>Lloji</th>
                     
@@ -128,26 +142,16 @@ const ProductList = ({data , warehouse , stockData}) => {
                     <th>Change Status</th>
                     </tr>
                 </thead>
-                <tbody className='bg-[#949494]'>
+                <tbody className='bg-black text-white'>
                     
                         {data && data.map((el , index) => {
                             return <tr key={index}>
-                                        <td className='justify-center text-center'>
+                                        <td className='justify-center text-center py-3'>
                                             
 
-                                            <Dialog>
-                                            <DialogTrigger>
-                                            <img src={`${el.multimedia}`} className='w-[50px] py-1 mx-auto' alt="" />
-                                            </DialogTrigger>
-                                            <DialogContent>
-                                                <DialogHeader>
-                                                <DialogTitle>Image</DialogTitle>
-                                                <DialogDescription>
-                                                <img src={`${el.multimedia}`} className='w-full mx-auto' alt="" />
-                                                </DialogDescription>
-                                                </DialogHeader>
-                                            </DialogContent>
-                                            </Dialog>
+                                            
+                                            {index + 1}
+                                           
                                         </td>
                                         <td className='justify-center text-center'>{el.name}</td>
                                         <td className='justify-center text-center'>{el.type}</td>
@@ -161,11 +165,15 @@ const ProductList = ({data , warehouse , stockData}) => {
                                         <td className='justify-center text-center'>€{el.sales_cost}</td>
                                         <td className='justify-center text-center'>{el.status}</td>
                                         <td className='justify-center text-center'>
-                                            <select  onChange={(e) => changeStatus(e.target.value , el._id) }  name="" id="">
+                                            <select className='bg-black text-white cursor-pointer' onChange={(e) => changeStatus(e.target.value , el._id) }  name="" id="">
                                               <option value=''>Select</option>
                                               <option value="Draft">Draft</option>
                                               <option value="Started">Started</option>
-                                              <option value="Progressing">Progressing</option>
+                                              <option value="Planning">Planning</option>
+                                              <option value="Research">Research</option>
+                                              <option value="Development">Development</option>
+                                              <option value="Testing">Testing</option>
+                                              <option value="Review">Review</option>
                                               <option value="Finished">Finished</option>
                                             </select>
                                         </td>
@@ -179,17 +187,35 @@ const ProductList = ({data , warehouse , stockData}) => {
 
 
 
-                <div key={randomKey && randomKey} className='my-5 flex gap-3 w-full justify-evenly'  >
-                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
+                {/* <div key={randomKey && randomKey} className='my-5 flex gap-3 w-full justify-evenly'  >
+                        <div className='rounded shadow-lg overflow-hidden w-[10%] bg-black'>
                           <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
                             Ready For Production
                             <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
                           </div>
                           {drafted && drafted.map((el , index) => {
-                            return <div onClick={() => handleNext(el._id , el.status)} className='w-[90%] relative flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
+                            return <Dialog   key={index}>
+                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
+                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
                               <FaSitemap />
                               {el.name}
                             </div>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle></DialogTitle>
+                                <DialogDescription>
+                                  <div className='my-5 flex items-center justify-center flex-col text-center'>
+                                    <h2 className='text-xl my-2'>Ndryshoni statusin e prodhimit</h2>
+                                    <Button variant="outline" className="bg-black text-white hover:text-white hover:bg-black">Next</Button>
+                                  </div>
+                                  
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog> 
+                            
+                           
                           })}
                         </div>
                         
@@ -200,13 +226,103 @@ const ProductList = ({data , warehouse , stockData}) => {
                             <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
                           </div>
                           {started && started.map((el , index) => {
-                            return <div  key={index} className='w-[90%] relative flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              
-                             
+                            return <Dialog   key={index}>
+                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
+                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
                               <FaSitemap />
                               {el.name}
-                             
                             </div>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                <DialogDescription>
+                                  This action cannot be undone. This will permanently delete your account
+                                  and remove your data from our servers.
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog> 
+                          })}
+                        </div>
+
+
+                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
+                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
+                            Started
+                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
+                          </div>
+                          {started && started.map((el , index) => {
+                            return <Dialog   key={index}>
+                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
+                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
+                              <FaSitemap />
+                              {el.name}
+                            </div>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                <DialogDescription>
+                                  This action cannot be undone. This will permanently delete your account
+                                  and remove your data from our servers.
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog> 
+                          })}
+                        </div>
+
+                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
+                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
+                            Started
+                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
+                          </div>
+                          {started && started.map((el , index) => {
+                            return <Dialog   key={index}>
+                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
+                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
+                              <FaSitemap />
+                              {el.name}
+                            </div>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                <DialogDescription>
+                                  This action cannot be undone. This will permanently delete your account
+                                  and remove your data from our servers.
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog> 
+                          })}
+                        </div>
+
+
+                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
+                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
+                            Started
+                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
+                          </div>
+                          {started && started.map((el , index) => {
+                            return <Dialog   key={index}>
+                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
+                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
+                              <FaSitemap />
+                              {el.name}
+                            </div>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                <DialogDescription>
+                                  This action cannot be undone. This will permanently delete your account
+                                  and remove your data from our servers.
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog> 
                           })}
                         </div>
 
@@ -217,13 +333,23 @@ const ProductList = ({data , warehouse , stockData}) => {
                             <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
                           </div>
                           {progressing && progressing.map((el , index) => {
-                            return <div className='w-[90%] relative flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              
-                             
+                            return <Dialog   key={index}>
+                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
+                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
                               <FaSitemap />
                               {el.name}
-                              
                             </div>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                <DialogDescription>
+                                  This action cannot be undone. This will permanently delete your account
+                                  and remove your data from our servers.
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog> 
                           })}
                         </div>
 
@@ -234,16 +360,297 @@ const ProductList = ({data , warehouse , stockData}) => {
                             <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
                           </div>
                           { finished && finished.map((el , index) => {
-                            return <div className='w-[90%] relative flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              
-                             
+                            return <Dialog   key={index}>
+                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
+                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
                               <FaSitemap />
                               {el.name}
-                            
                             </div>
+                            </DialogTrigger>
+                            <DialogContent>
+                              <DialogHeader>
+                                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                                <DialogDescription>
+                                  This action cannot be undone. This will permanently delete your account
+                                  and remove your data from our servers.
+                                </DialogDescription>
+                              </DialogHeader>
+                            </DialogContent>
+                          </Dialog> 
                           })}
                         </div>
 
+                </div> */}
+
+
+                <div className='w-full p-2 flex gap-1 bg-black my-5 rounded-lg shadow-lg text-white'>
+                  <div className='w-[10%] text-center'></div>
+                  <div className='w-[10%] text-center flex flex-col'>
+                    <div className='head w-full'>Draft</div>
+                    <div className='production-body flex flex-col gap-5 my-2'>
+                      <br />
+                      
+                      {data && data.filter((el) => el.status == 'Draft').map((el , index) => {
+                        return <Dialog>
+                        <DialogTrigger>
+
+                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          {el.name}
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle></DialogTitle>
+                            <DialogDescription>
+                              <div className='w-full text-center'>
+                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
+                                <Button onClick={() => handleStatusChange(el._id)} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                              </div>
+                              
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                         
+                        
+                        
+                      })}
+
+                    </div>
+                  </div>
+                  <div className='w-[10%] text-center'>
+                    <div className='head w-full'>Started</div>
+                    <div className='production-body flex flex-col gap-5 my-2'>
+                      <br />
+                      
+                      {data && data.filter((el) => el.status == 'Started').map((el , index) => {
+                        return <Dialog>
+                        <DialogTrigger>
+
+                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          {el.name}
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle></DialogTitle>
+                            <DialogDescription>
+                              <div className='w-full text-center'>
+                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
+                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                              </div>
+                              
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                         
+                        
+                        
+                      })}
+
+                    </div>
+                  </div>
+                  <div className='w-[10%] text-center'>
+                    <div className='head w-full'>Planning</div>
+                    <div className='production-body flex flex-col gap-5 my-2'>
+                      <br />
+                      
+                      {data && data.filter((el) => el.status == 'Planning').map((el , index) => {
+                        return <Dialog>
+                        <DialogTrigger>
+
+                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          {el.name}
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle></DialogTitle>
+                            <DialogDescription>
+                              <div className='w-full text-center'>
+                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
+                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                              </div>
+                              
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                         
+                        
+                        
+                      })}
+
+                    </div>
+                  </div>
+                  <div className='w-[10%] text-center'>
+                    <div className='head w-full'>Research</div>
+                    <div className='production-body flex flex-col gap-5 my-2'>
+                      <br />
+                      
+                      {data && data.filter((el) => el.status == 'Research').map((el , index) => {
+                        return <Dialog>
+                        <DialogTrigger>
+
+                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          {el.name}
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle></DialogTitle>
+                            <DialogDescription>
+                              <div className='w-full text-center'>
+                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
+                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                              </div>
+                              
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                         
+                        
+                        
+                      })}
+
+                    </div>
+                  </div>
+                  <div className='w-[10%] text-center'>
+                    <div className='head w-full'>Development</div>
+                    <div className='production-body flex flex-col gap-5 my-2'>
+                      <br />
+                      
+                      {data && data.filter((el) => el.status == 'Development').map((el , index) => {
+                        return <Dialog>
+                        <DialogTrigger>
+
+                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          {el.name}
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle></DialogTitle>
+                            <DialogDescription>
+                              <div className='w-full text-center'>
+                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
+                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                              </div>
+                              
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                         
+                        
+                        
+                      })}
+
+                    </div>
+                  </div>
+                  <div className='w-[10%] text-center'>
+                    <div className='head w-full'>Testing</div>
+                    <div className='production-body flex flex-col gap-5 my-2'>
+                      <br />
+                      
+                      {data && data.filter((el) => el.status == 'Testing').map((el , index) => {
+                        return <Dialog>
+                        <DialogTrigger>
+
+                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          {el.name}
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle></DialogTitle>
+                            <DialogDescription>
+                              <div className='w-full text-center'>
+                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
+                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                              </div>
+                              
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                         
+                        
+                        
+                      })}
+
+                    </div>
+                  </div>
+                  <div className='w-[10%] text-center'>
+                    <div className='head w-full'>Review</div>
+                    <div className='production-body flex flex-col gap-5 my-2'>
+                      <br />
+                      
+                      {data && data.filter((el) => el.status == 'Review').map((el , index) => {
+                        return <Dialog>
+                        <DialogTrigger>
+
+                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          {el.name}
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle></DialogTitle>
+                            <DialogDescription>
+                              <div className='w-full text-center'>
+                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
+                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                              </div>
+                              
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                         
+                        
+                        
+                      })}
+
+                    </div>
+                  </div>
+                  <div className='w-[10%] text-center'>
+                    <div className='head w-full'>Finished</div>
+                    <div className='production-body flex flex-col gap-5 my-2'>
+                      <br />
+                      
+                      {data && data.filter((el) => el.status == 'Finished').map((el , index) => {
+                        return <Dialog>
+                        <DialogTrigger>
+
+                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          {el.name}
+                          </div>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <DialogHeader>
+                            <DialogTitle></DialogTitle>
+                            <DialogDescription>
+                              <div className='w-full text-center'>
+                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
+                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                              </div>
+                              
+                            </DialogDescription>
+                          </DialogHeader>
+                        </DialogContent>
+                      </Dialog>
+                         
+                        
+                        
+                      })}
+
+                    </div>
+                  </div>
+                  <div className='w-[10%] text-center'></div>
+                  
                 </div>
         </div>
     )

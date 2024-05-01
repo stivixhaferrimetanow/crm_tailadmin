@@ -68,7 +68,7 @@ const proposals = await getProposals()
       <div className='mt-5'>
             <div className="relative overflow-x-auto">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-white uppercase bg-[#1C2434] dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" className="px-6 py-3">
                     ID

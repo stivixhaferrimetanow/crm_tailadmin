@@ -48,7 +48,7 @@ const page = async () => {
     const warehouse = await fetchWarehouse()
     return(
         <div>
-            <h2 className='text-black text-2xl font-semibold py-2'>All Products</h2>
+            <h2 className='text-black text-2xl font-semibold py-2'>Listimi i produkteve</h2>
             <ProductList  data={data.data && data.data} stockData={stockData.data && stockData.data} warehouse={ warehouse.data && warehouse.data} />
         </div>
     )

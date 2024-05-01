@@ -18,7 +18,7 @@ const ProductForm = ({token , stockData}) => {
   const [type, setType] = useState('');
   const [productionCost, setProductionCost] = useState(0);
   const [salesCost, setSalesCost] = useState(0);
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState('');
   const [errorMsg, setErrorMsg] = useState(null);
   const [composition, setComposition] = useState([]);
 
@@ -255,7 +255,7 @@ const ProductForm = ({token , stockData}) => {
        
         
         <div className="mb-6 pt-4 ">
-          <label className="mb-5 block text-xl font-semibold text-[#07074D]">
+          {/* <label className="mb-5 block text-xl font-semibold text-[#07074D]">
             Upload File
           </label>
           <div className="mb-8">
@@ -276,7 +276,7 @@ const ProductForm = ({token , stockData}) => {
                 </span>
               </div>
             </label>
-          </div>
+          </div> */}
         
           
         </div>

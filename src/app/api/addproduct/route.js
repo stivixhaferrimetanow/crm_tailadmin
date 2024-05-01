@@ -25,6 +25,77 @@ async function updateStock(array) {
 
 
 
+// export async function POST(req) {
+//   try {
+//     await connect();
+//     const data = await req.formData();
+//     const name = data.get('name');
+//     const compositionString = data.get('composition');
+//     const composition = JSON.parse(compositionString);
+
+//     let sum = 0;
+//     composition.map((el) =>{
+//       let prod = el.stock * el.cost;
+//       sum += prod
+//     })
+   
+
+//     const composition_cost = sum;
+   
+//     const production_cost = data.get('production_cost');
+
+//     const sales_cost = data.get('sales_cost');
+//     const total_cost = parseInt(sales_cost) + parseInt(sum) + parseInt(production_cost);
+//     const multimediaFile = data.get('multimedia');
+
+//     if (!multimediaFile) {
+//       return NextResponse.json({ msg: 'Multimedia file is required' });
+//     }
+
+
+//     const fileBuffer = await multimediaFile.arrayBuffer();
+//     const buffer = Buffer.from(fileBuffer);
+
+//     const fileName = `${Date.now()}-${multimediaFile.name}`;
+//     const filePath = path.join(process.cwd(), 'public', 'uploads', fileName);
+//     await writeFile(filePath, buffer);
+    
+
+
+//     const product = new ProductModel({
+//       name,
+//       composition,
+//       composition_cost,
+//       production_cost,
+//       total_cost,
+//       sales_cost,
+//       multimedia: `/uploads/${fileName}`
+//     });
+
+//     await product.save();
+
+
+//     await updateStock(composition)
+
+//     return NextResponse.json({ msg: 'Product added successfully' , status: 200 });
+//   } catch (error) {
+//     console.error(error);
+//     return NextResponse.json({ msg: error, status: 500 });
+//   }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
 export async function POST(req) {
   try {
     connect();
@@ -34,67 +105,60 @@ export async function POST(req) {
     const composition = JSON.parse(compositionString);
 
     let sum = 0;
-    composition.map((el) =>{
+    composition.forEach((el) => {
       let prod = el.stock * el.cost;
-      sum += prod
-    })
-   
+      sum += prod;
+    });
 
     const composition_cost = sum;
-   
+
     const production_cost = data.get('production_cost');
 
     const sales_cost = data.get('sales_cost');
     const total_cost = parseInt(sales_cost) + parseInt(sum) + parseInt(production_cost);
+
     const multimediaFile = data.get('multimedia');
 
-    if (!multimediaFile) {
-      return NextResponse.json({ msg: 'Multimedia file is required' });
+    if (multimediaFile) {
+      const fileBuffer = await multimediaFile.arrayBuffer();
+      const buffer = Buffer.from(fileBuffer);
+
+      const fileName = `${Date.now()}-${multimediaFile.name}`;
+      const filePath = path.join(process.cwd(), 'public', 'uploads', fileName);
+      await writeFile(filePath, buffer);
+
+      const product = new ProductModel({
+        name,
+        composition,
+        composition_cost,
+        production_cost,
+        total_cost,
+        sales_cost,
+        multimedia: `/uploads/${fileName}`
+      });
+
+      await product.save();
+    } else {
+      const product = new ProductModel({
+        name,
+        composition,
+        composition_cost,
+        production_cost,
+        total_cost,
+        sales_cost
+      });
+
+      await product.save();
     }
 
+    await updateStock(composition);
 
-    const fileBuffer = await multimediaFile.arrayBuffer();
-    const buffer = Buffer.from(fileBuffer);
-
-    const fileName = `${Date.now()}-${multimediaFile.name}`;
-    const filePath = path.join(process.cwd(), 'public', 'uploads', fileName);
-    await writeFile(filePath, buffer);
-    
-
-
-    const product = new ProductModel({
-      name,
-      composition,
-      composition_cost,
-      production_cost,
-      total_cost,
-      sales_cost,
-      multimedia: `/uploads/${fileName}`
-    });
-
-    await product.save();
-
-
-    await updateStock(composition)
-
-    return NextResponse.json({ msg: 'Product added successfully' , status: 200 });
+    return NextResponse.json({ msg: 'Product added successfully', status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json({ msg: error, status: 500 });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

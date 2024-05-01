@@ -40,6 +40,10 @@ const productionSchema = new Schema({
         type:String,
         rqeuired:false,
         default: 'Draft'
+    },
+    dates:{
+        type: [Date],
+        required:false
     }
 
 }, { timestamps: true });

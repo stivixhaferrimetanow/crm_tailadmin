@@ -3,36 +3,50 @@ import ProductionModel from "@/models/production";
 import ProductModel from "@/models/product";
 import connect from "@/lib/db";
 import { NextResponse } from "next/server";
-
+import Timestamp from "@/models/timestamp";
 
 export const dynamic = "force-dynamic";
-// Connect to the database
-connect();
+
+await connect();
 
 export async function POST(req) {
   try {
     const body = await req.json();
     const { _id } = body;
 
-    // Find the product in the ProductModel
+    
     const product = await ProductModel.findOne({ _id: _id });
     
     if (!product) {
       return NextResponse.json({ msg: 'Product not found', status: 404 });
     }
 
-    // Create a new document in the ProductionModel
+    const now = new Date();
+    const formattedDateTime = now.toLocaleString();
+    
     const newProduction = new ProductionModel({
-      name: product.name, // Assuming 'name' is a field in your model
+      name: product.name, 
       type: product.type,
       composition: product.composition,
       composition_cost: product.composition_cost,
       production_cost: product.production_cost,
       total_cost: product.total_cost,
       multimedia: product.multimedia,
-      sales_cost: product.sales_cost
+      sales_cost: product.sales_cost,
+      
     });
+
+    const newTimestamp = new Timestamp({
+      item_id: _id,
+      current_status: 'Draft',
+      draft_start_time: now,
+      total_start_time: now
+    });
+
+
     await newProduction.save();
+
+    await newTimestamp.save();
 
     // Remove the product from the ProductModel
     await ProductModel.deleteOne({ _id: _id });

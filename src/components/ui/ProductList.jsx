@@ -25,6 +25,7 @@ import {
   import {toast} from 'sonner'
   import { useRouter } from 'next/navigation'
 
+
 import { useMyContext } from '@/app/context/context'
 
 
@@ -43,7 +44,8 @@ const ProductList = ({data , warehouse , stockData}) => {
             const res = await axios.post('http://localhost:3000/api/addproduction', {_id: id} , {'cache': 'no-store'});
             toast('Product ready for production')
             localStorage.setItem('new', 'true');
-            setNewProduction(true)
+            setNewProduction(true);
+            window.location.reload();
         }catch(error){
             console.log(error)
         }
@@ -52,10 +54,10 @@ const ProductList = ({data , warehouse , stockData}) => {
 
     return(
         <div>
-                <table class="table-auto w-full">
-                <thead className='bg-[#1C2333] text-white '>
+                <table class="table-auto rounded-lg p-2 shadow-lg w-full">
+                <thead className='bg-black   text-white '>
                     <tr>
-                    <th>Multimedia</th>
+                    <th>ID</th>
                     <th>Emri</th>
                     <th>Lloji</th>
                     
@@ -66,16 +68,16 @@ const ProductList = ({data , warehouse , stockData}) => {
                     <th>Production</th>
                     </tr>
                 </thead>
-                <tbody className='bg-[#949494]'>
+                <tbody className='bg-black  p-2 text-white '>
                     
                         {data && data.map((el , index) => {
-                            return <tr>
-                                        <td className='justify-center text-center'>
+                            return <tr key={index}  >
+                                        <td className='justify-center text-center py-4'>
                                             
 
                                             <Dialog>
                                             <DialogTrigger>
-                                            <img src={`${el.multimedia}`} className='w-[50px] py-1 mx-auto' alt="" />
+                                            {index + 1}
                                             </DialogTrigger>
                                             <DialogContent>
                                                 <DialogHeader>
@@ -98,7 +100,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                                         <td className='justify-center text-center'>€{el.total_cost}</td>
                                         <td className='justify-center text-center'>€{el.sales_cost}</td>
                                         <td className='justify-center text-center'>
-                                            <button className='px-4 py-1 bg-black text-white' onClick={() => shto(el._id)}>Shto</button>
+                                            <button className='px-4 py-1 rounded-md shadow-lg bg-black text-white' onClick={() => shto(el._id)}>Shto</button>
                                         </td>
                                      </tr>
                         })}
