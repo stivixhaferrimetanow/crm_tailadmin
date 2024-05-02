@@ -32,7 +32,8 @@ const UiProfile = () =>{
     },[])
 
     return(
-        <div className='w-[90%] mx-auto p-5 bg-white rounded-md'>
+        <div className='w-full'>
+             <div className='w-[90%] mx-auto p-5 bg-white rounded-md'>
             <h2 className='text-xl font-semibold'>My Profile</h2>
             
             <br/>
@@ -102,6 +103,40 @@ const UiProfile = () =>{
                     LOG OUT</button>
             </div>
         </div>
+
+
+        <div className='w-[90%] mt-[5%] mx-auto p-5 bg-white rounded-md'>
+            <h2 className='text-xl font-semibold'>Ndrysho Passwording</h2>
+            
+            <br/>
+            <br/>
+            <div className='flex flex-col'>
+                <label htmlFor="">My Username:</label>
+                <input
+                    type="text"
+                    required
+                    value={data.name && data.name}
+                    placeholder="Sales Cost here..."
+                    className="w-full my-2 rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                />
+            </div>
+            
+            
+
+            <div className='flex flex-col'>
+                
+                <button
+                    required
+                    value={data.createdAt && data.createdAt.substring(0 , 10)}
+                    placeholder="Sales Cost here..."
+                    className="w-full flex items-center text-center justify-center gap-3 bg-black text-white my-2 rounded-md border border-[#e0e0e0] py-3 px-6 text-base font-medium  outline-none focus:border-[#6A64F1] focus:shadow-md"
+                >
+                    CHANGE PASSWORD</button>
+            </div>
+            
+        </div>
+        </div>
+       
     )
 }
 

@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import MyEvents from '@/components/ui/MyEvents';
 
 
+
 const page = () => {
 
 
@@ -18,8 +19,9 @@ const page = () => {
   return (
     <div>
       <div className='flex items-start'>
-        <div className='w-[33%] text-center flex justify-center'>
+        <div className='w-[33%] flex-col text-center  justify-center'>
           <MyEvents   user={user && user} />
+       
         </div>
         <div className='w-[33%] text-center flex justify-center'>
             <Cal/>
@@ -27,6 +29,10 @@ const page = () => {
         <div className='w-[33%] text-center flex justify-center'>
           <EventForm  user={user && user}  />
         </div>
+      </div>
+
+      <div className='flex items-start'>
+
       </div>
       
     </div>

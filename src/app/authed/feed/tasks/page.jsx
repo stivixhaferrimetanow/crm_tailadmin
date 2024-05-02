@@ -157,8 +157,8 @@ const page = () => {
 
 
   return(
-    <div className='w-[90%] mx-auto flex'>
-      <div className='w-[70%]'>
+    <div className='w-[90%] mx-auto flex lg:flex-row flex-col'>
+      <div className='lg:w-[70%] w-full'>
         <div className='w-[95%] p-5 bg-white mt-2 rounded-lg shadow-lg  gap-3'>
           
           <div className='w-full flex flex-col my-2'>
@@ -341,8 +341,8 @@ const page = () => {
 
 
       </div>
-      <div className='w-[30%]'>
-        <div className='w-[95%] mx-auto p-5 rounded-lg shadow-xl bg-black text-white'>
+      <div className='lg:w-[30%] w-full'>
+        <div className='w-[95%] lg:mx-auto p-5 rounded-lg shadow-xl bg-black text-white'>
             <p className='text-gray-500 text-sm'>Total of Tasks:</p>
             <h2 className='text-3xl'>{tasks && tasks.length}</h2>
         </div>

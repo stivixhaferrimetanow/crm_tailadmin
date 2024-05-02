@@ -50,7 +50,7 @@ const page = async ({myData}) => {
       </div>
 
     
-      <div className='w-[95%] mx-auto flex items-center p-1'>
+      <div className='w-[95%] my-5 lg:my-1 mx-auto flex items-center p-1'>
         <UsersTable/>
       </div>
     </div>

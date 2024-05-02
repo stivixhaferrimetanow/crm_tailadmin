@@ -96,7 +96,7 @@ const proposals = await getProposals()
                 </thead>
                 <tbody>
                       {proposals && proposals.map((el , index) => {
-                        return  <tr className="btext-white uppercase bg-[#1C2434] dark:border-gray-700" key={index}>
+                        return  <tr className="btext-white uppercase bg-black text-white dark:border-gray-700" key={index}>
                         <th
                         scope="row"
                         className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white"

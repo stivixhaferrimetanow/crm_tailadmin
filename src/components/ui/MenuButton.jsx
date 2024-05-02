@@ -16,8 +16,8 @@ const MenuButton = () => {
 
     return(
         <div>
-            <Button className="lh:hidden xl:hidden fixed top-0 left-0 mt-1 ml-3" onClick={handleClick}>
-        <RiMenu2Fill color='white' />
+            <Button className="lh:hidden xl:hidden fixed top-0 left-0 mt-2 ml-3 bg-white hover:bg-white" onClick={handleClick}>
+            <RiMenu2Fill color='black' />
       </Button>
         </div>
     )

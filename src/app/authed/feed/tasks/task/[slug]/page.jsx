@@ -56,20 +56,20 @@ const page = ({params}) => {
 
     return(
         <div className='w-full '>
-            <div className='w-[95%] gap-3 mx-auto flex my-2'>
-                <div className='w-[25%] p-5 bg-black rounded-lg shadown-xl text-white ' >
+            <div className='w-[95%] gap-3 mx-auto  lg:flex grid grid-col-2 my-2'>
+                <div className='lg:w-[25%] w-full p-5 bg-black rounded-lg shadown-xl text-white ' >
                     <h2 className='text-md text-white'>Task:</h2>
                     <h1 className='text-2xl text-whtie font-semibold text-white' >{myTask.title && myTask.title}</h1>
                 </div>
-                <div className='w-[25%] p-5 bg-black rounded-lg shadown-xl'>
+                <div className='lg:w-[25%] w-full p-5 bg-black rounded-lg shadown-xl'>
                     <h2 className='text-md  text-white '>Start Date:</h2>
                     <h1 className='text-2xl text-whtie font-semibold text-white'>{myTask.current_date && myTask.current_date}</h1>
                 </div>
-                <div className='w-[25%] p-5 bg-black rounded-lg shadown-xl'>
+                <div className='lg:w-[25%] w-full p-5 bg-black rounded-lg shadown-xl'>
                     <h2 className='text-md  text-white '>Due Date:</h2>
                     <h1 className='text-2xl text-whtie font-semibold text-white'>{myTask.due_date && myTask.due_date}</h1>
                 </div>
-                <div className='w-[25%] p-5 bg-black rounded-lg shadown-xl'>
+                <div className='lg:w-[25%] w-full p-5 bg-black rounded-lg shadown-xl'>
                     <h2 className='text-md  text-white '>Progress Status:</h2>
                     <h1 className='text-2xl text-whtie font-semibold text-white'>{myTask.progress && myTask.progress}</h1>
                 </div>
@@ -79,7 +79,7 @@ const page = ({params}) => {
                 <Progress value={1} />
             </div>
             <div className='w-[95%] mx-auto'>
-                <ul className='grid grid-cols-4 gap-3'>
+                <ul className='lg:grid lg:grid-cols-4 flex flex-col gap-3'>
                 {myTask.members && myTask.members.map((el , index) => {
                         return <li key={index}>
                       

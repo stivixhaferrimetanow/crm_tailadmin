@@ -36,7 +36,7 @@ const page = () => {
     }
 
   return (
-    <div className='bg-black'>
+    <div className='bg-black lg:h-screen h-[100vh]'>
 
 
 

@@ -59,7 +59,7 @@ const page = async () => {
 
   return (
     <div>
-  <div className='w-full grid grid-cols-4 gap-5'>
+  <div className='w-full lg:grid lg:grid-cols-4 flex flex-col gap-5'>
       
       {myTasks && myTasks.map((el , index) => {
         return  <div className='py-2' key={index}> <Card  className="hover:shadow-xl cursor-pointer transition-all 1s ease-in-out">

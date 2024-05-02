@@ -23,7 +23,19 @@ const ProductList = ({data , warehouse , stockData}) => {
 
 
   const [randomKey , setRandomKey] = useState(1)
+  const [timestamps , setTimestapms] = useState([]);
 
+
+
+  const getTimeStapms = async () => {
+    try{
+      const res = await axios.get('http://localhost:3000/api/gettimestamps');
+      setTimestapms(res.data.data);
+      console.log(timestamps , 'timestamps')
+    }catch(error){
+      console.log(error)
+    }
+  }
 
 
     const changeStatus = async (value , id) => {
@@ -86,16 +98,17 @@ const ProductList = ({data , warehouse , stockData}) => {
         setStarted(startedData);
         setProgressing(progressiveData);
         setFinished(finishedData);
-
+        getTimeStapms()
 
     },[])
 
 
 
 
-    const handleStatusChange = async (id) => {
+    const handleStatusChange = async (id , status) => {
       try{
-        alert(id)
+          const res = await axios.post('http://localhost:3000/api/changetime', {item_id: id, current_status: status });
+          window.location.reload()
       }catch(error){
         console.log(error)
       }
@@ -139,7 +152,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                     <th>Kosto Totale</th>
                     <th>Cmimi i Shitjes</th>
                     <th>Status</th>
-                    <th>Change Status</th>
+                  
                     </tr>
                 </thead>
                 <tbody className='bg-black text-white'>
@@ -164,19 +177,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                                         <td className='justify-center text-center'>€{el.total_cost}</td>
                                         <td className='justify-center text-center'>€{el.sales_cost}</td>
                                         <td className='justify-center text-center'>{el.status}</td>
-                                        <td className='justify-center text-center'>
-                                            <select className='bg-black text-white cursor-pointer' onChange={(e) => changeStatus(e.target.value , el._id) }  name="" id="">
-                                              <option value=''>Select</option>
-                                              <option value="Draft">Draft</option>
-                                              <option value="Started">Started</option>
-                                              <option value="Planning">Planning</option>
-                                              <option value="Research">Research</option>
-                                              <option value="Development">Development</option>
-                                              <option value="Testing">Testing</option>
-                                              <option value="Review">Review</option>
-                                              <option value="Finished">Finished</option>
-                                            </select>
-                                        </td>
+                                        
                                      </tr>
                         })}
                     
@@ -187,200 +188,7 @@ const ProductList = ({data , warehouse , stockData}) => {
 
 
 
-                {/* <div key={randomKey && randomKey} className='my-5 flex gap-3 w-full justify-evenly'  >
-                        <div className='rounded shadow-lg overflow-hidden w-[10%] bg-black'>
-                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
-                            Ready For Production
-                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
-                          </div>
-                          {drafted && drafted.map((el , index) => {
-                            return <Dialog   key={index}>
-                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
-                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              <FaSitemap />
-                              {el.name}
-                            </div>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle></DialogTitle>
-                                <DialogDescription>
-                                  <div className='my-5 flex items-center justify-center flex-col text-center'>
-                                    <h2 className='text-xl my-2'>Ndryshoni statusin e prodhimit</h2>
-                                    <Button variant="outline" className="bg-black text-white hover:text-white hover:bg-black">Next</Button>
-                                  </div>
-                                  
-                                </DialogDescription>
-                              </DialogHeader>
-                            </DialogContent>
-                          </Dialog> 
-                            
-                           
-                          })}
-                        </div>
-                        
-
-                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
-                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
-                            Started
-                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
-                          </div>
-                          {started && started.map((el , index) => {
-                            return <Dialog   key={index}>
-                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
-                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              <FaSitemap />
-                              {el.name}
-                            </div>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                <DialogDescription>
-                                  This action cannot be undone. This will permanently delete your account
-                                  and remove your data from our servers.
-                                </DialogDescription>
-                              </DialogHeader>
-                            </DialogContent>
-                          </Dialog> 
-                          })}
-                        </div>
-
-
-                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
-                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
-                            Started
-                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
-                          </div>
-                          {started && started.map((el , index) => {
-                            return <Dialog   key={index}>
-                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
-                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              <FaSitemap />
-                              {el.name}
-                            </div>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                <DialogDescription>
-                                  This action cannot be undone. This will permanently delete your account
-                                  and remove your data from our servers.
-                                </DialogDescription>
-                              </DialogHeader>
-                            </DialogContent>
-                          </Dialog> 
-                          })}
-                        </div>
-
-                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
-                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
-                            Started
-                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
-                          </div>
-                          {started && started.map((el , index) => {
-                            return <Dialog   key={index}>
-                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
-                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              <FaSitemap />
-                              {el.name}
-                            </div>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                <DialogDescription>
-                                  This action cannot be undone. This will permanently delete your account
-                                  and remove your data from our servers.
-                                </DialogDescription>
-                              </DialogHeader>
-                            </DialogContent>
-                          </Dialog> 
-                          })}
-                        </div>
-
-
-                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
-                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
-                            Started
-                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
-                          </div>
-                          {started && started.map((el , index) => {
-                            return <Dialog   key={index}>
-                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
-                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              <FaSitemap />
-                              {el.name}
-                            </div>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                <DialogDescription>
-                                  This action cannot be undone. This will permanently delete your account
-                                  and remove your data from our servers.
-                                </DialogDescription>
-                              </DialogHeader>
-                            </DialogContent>
-                          </Dialog> 
-                          })}
-                        </div>
-
-
-                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
-                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
-                            Progressing
-                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
-                          </div>
-                          {progressing && progressing.map((el , index) => {
-                            return <Dialog   key={index}>
-                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
-                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              <FaSitemap />
-                              {el.name}
-                            </div>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                <DialogDescription>
-                                  This action cannot be undone. This will permanently delete your account
-                                  and remove your data from our servers.
-                                </DialogDescription>
-                              </DialogHeader>
-                            </DialogContent>
-                          </Dialog> 
-                          })}
-                        </div>
-
-
-                        <div className='rounded shadow-lg overflow-hidden w-[25%] bg-black'>
-                          <div className='p-5 w-full bg-black text-white text-lg font-semibold'>
-                            Finished
-                            <hr className='opacity-[0.3] mt-2 w-full mx-auto'/>
-                          </div>
-                          { finished && finished.map((el , index) => {
-                            return <Dialog   key={index}>
-                            <DialogTrigger className='w-[90%] mx-auto ml-5'>
-                            <div  className='flex gap-2 items-center mx-auto my-2 bg-white p-4 rounded'>
-                              <FaSitemap />
-                              {el.name}
-                            </div>
-                            </DialogTrigger>
-                            <DialogContent>
-                              <DialogHeader>
-                                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                <DialogDescription>
-                                  This action cannot be undone. This will permanently delete your account
-                                  and remove your data from our servers.
-                                </DialogDescription>
-                              </DialogHeader>
-                            </DialogContent>
-                          </Dialog> 
-                          })}
-                        </div>
-
-                </div> */}
+                
 
 
                 <div className='w-full p-2 flex gap-1 bg-black my-5 rounded-lg shadow-lg text-white'>
@@ -394,7 +202,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
                           {el.name}
                           </div>
                         </DialogTrigger>
@@ -404,7 +212,16 @@ const ProductList = ({data , warehouse , stockData}) => {
                             <DialogDescription>
                               <div className='w-full text-center'>
                                 <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
-                                <Button onClick={() => handleStatusChange(el._id)} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                                <Button onClick={() => handleStatusChange(el._id , 'Started')} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button>
+                                <br />
+                                
+                                   {timestamps && timestamps.filter((item) => item.item_id == el._id ).map((obj) => {
+                                    return <div className='pt-5'>
+                                      
+                                      <p>Draft Started at:{obj.draft_start_time.substring(0, 10)},{obj.draft_start_time.substring(11, 19)}</p>
+                                    </div> 
+                                  })}
+                            
                               </div>
                               
                             </DialogDescription>
@@ -424,10 +241,10 @@ const ProductList = ({data , warehouse , stockData}) => {
                       <br />
                       
                       {data && data.filter((el) => el.status == 'Started').map((el , index) => {
-                        return <Dialog>
+                        return <Dialog  style={{zIndex : '1000'}}>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
                           {el.name}
                           </div>
                         </DialogTrigger>
@@ -435,9 +252,34 @@ const ProductList = ({data , warehouse , stockData}) => {
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
                             <DialogDescription>
-                              <div className='w-full text-center'>
+                            <div className='w-full text-center'>
                                 <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
-                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                                <Button onClick={() => handleStatusChange(el._id , 'Planning')} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button>
+                                <br />
+                                
+                                {
+                                  timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
+                                   
+                                    var draftStartTime = new Date(obj.draft_start_time);
+                                    var draftEndTime = new Date(obj.draft_end_time);
+                                    var timeDiff = draftEndTime - draftStartTime;
+                                    var secondsDiff = Math.floor(timeDiff / 1000);
+                                    var minutesDiff = Math.floor(secondsDiff / 60);
+                                    var hoursDiff = Math.floor(minutesDiff / 60);
+                                    var daysDiff = Math.floor(hoursDiff / 24);
+                                    var remainingHours = hoursDiff % 24;
+                                    var remainingMinutes = minutesDiff % 60;
+                                    var remainingSeconds = secondsDiff % 60;
+
+                                    return (
+                                      <div className='pt-5'>
+                                        
+                                        <p>From Draft to Started: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                      </div>
+                                    );
+                                  })
+                                }
+                                                            
                               </div>
                               
                             </DialogDescription>
@@ -460,7 +302,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
                           {el.name}
                           </div>
                         </DialogTrigger>
@@ -468,9 +310,34 @@ const ProductList = ({data , warehouse , stockData}) => {
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
                             <DialogDescription>
-                              <div className='w-full text-center'>
+                            <div className='w-full text-center'>
                                 <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
-                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                                <Button onClick={() => handleStatusChange(el._id , 'Research')} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button>
+                                <br />
+                                
+                                {
+                                  timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
+                                   
+                                    var draftStartTime = new Date(obj.started_start_time);
+                                    var draftEndTime = new Date(obj.started_end_time);
+                                    var timeDiff = draftEndTime - draftStartTime;
+                                    var secondsDiff = Math.floor(timeDiff / 1000);
+                                    var minutesDiff = Math.floor(secondsDiff / 60);
+                                    var hoursDiff = Math.floor(minutesDiff / 60);
+                                    var daysDiff = Math.floor(hoursDiff / 24);
+                                    var remainingHours = hoursDiff % 24;
+                                    var remainingMinutes = minutesDiff % 60;
+                                    var remainingSeconds = secondsDiff % 60;
+
+                                    return (
+                                      <div className='pt-5'>
+                                        
+                                        <p>Time Spent Starting: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                      </div>
+                                    );
+                                  })
+                                }
+                                                            
                               </div>
                               
                             </DialogDescription>
@@ -493,7 +360,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
                           {el.name}
                           </div>
                         </DialogTrigger>
@@ -501,9 +368,34 @@ const ProductList = ({data , warehouse , stockData}) => {
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
                             <DialogDescription>
-                              <div className='w-full text-center'>
+                            <div className='w-full text-center'>
                                 <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
-                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                                <Button onClick={() => handleStatusChange(el._id , 'Development')} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button>
+                                <br />
+                                
+                                {
+                                  timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
+                                   
+                                    var draftStartTime = new Date(obj.planning_start_time);
+                                    var draftEndTime = new Date(obj.planning_end_time);
+                                    var timeDiff = draftEndTime - draftStartTime;
+                                    var secondsDiff = Math.floor(timeDiff / 1000);
+                                    var minutesDiff = Math.floor(secondsDiff / 60);
+                                    var hoursDiff = Math.floor(minutesDiff / 60);
+                                    var daysDiff = Math.floor(hoursDiff / 24);
+                                    var remainingHours = hoursDiff % 24;
+                                    var remainingMinutes = minutesDiff % 60;
+                                    var remainingSeconds = secondsDiff % 60;
+
+                                    return (
+                                      <div className='pt-5'>
+                                        
+                                        <p>Time Spent Planning: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                      </div>
+                                    );
+                                  })
+                                }
+                                                            
                               </div>
                               
                             </DialogDescription>
@@ -526,7 +418,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
                           {el.name}
                           </div>
                         </DialogTrigger>
@@ -534,9 +426,34 @@ const ProductList = ({data , warehouse , stockData}) => {
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
                             <DialogDescription>
-                              <div className='w-full text-center'>
+                            <div className='w-full text-center'>
                                 <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
-                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                                <Button onClick={() => handleStatusChange(el._id , 'Testing')} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button>
+                                <br />
+                                
+                                {
+                                  timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
+                                   
+                                    var draftStartTime = new Date(obj.research_start_time);
+                                    var draftEndTime = new Date(obj.research_end_time);
+                                    var timeDiff = draftEndTime - draftStartTime;
+                                    var secondsDiff = Math.floor(timeDiff / 1000);
+                                    var minutesDiff = Math.floor(secondsDiff / 60);
+                                    var hoursDiff = Math.floor(minutesDiff / 60);
+                                    var daysDiff = Math.floor(hoursDiff / 24);
+                                    var remainingHours = hoursDiff % 24;
+                                    var remainingMinutes = minutesDiff % 60;
+                                    var remainingSeconds = secondsDiff % 60;
+
+                                    return (
+                                      <div className='pt-5'>
+                                        
+                                        <p>Time Spent Researching: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                      </div>
+                                    );
+                                  })
+                                }
+                                                            
                               </div>
                               
                             </DialogDescription>
@@ -559,7 +476,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
                           {el.name}
                           </div>
                         </DialogTrigger>
@@ -567,10 +484,36 @@ const ProductList = ({data , warehouse , stockData}) => {
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
                             <DialogDescription>
-                              <div className='w-full text-center'>
+                            <div className='w-full text-center'>
                                 <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
-                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                                <Button onClick={() => handleStatusChange(el._id , 'Review')} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button>
+                                <br />
+                                
+                                {
+                                  timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
+                                   
+                                    var draftStartTime = new Date(obj.development_start_time);
+                                    var draftEndTime = new Date(obj.development_end_time);
+                                    var timeDiff = draftEndTime - draftStartTime;
+                                    var secondsDiff = Math.floor(timeDiff / 1000);
+                                    var minutesDiff = Math.floor(secondsDiff / 60);
+                                    var hoursDiff = Math.floor(minutesDiff / 60);
+                                    var daysDiff = Math.floor(hoursDiff / 24);
+                                    var remainingHours = hoursDiff % 24;
+                                    var remainingMinutes = minutesDiff % 60;
+                                    var remainingSeconds = secondsDiff % 60;
+
+                                    return (
+                                      <div className='pt-5'>
+                                        
+                                        <p>Time Spent Developing: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                      </div>
+                                    );
+                                  })
+                                }
+                                                            
                               </div>
+                              
                               
                             </DialogDescription>
                           </DialogHeader>
@@ -592,7 +535,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
                           {el.name}
                           </div>
                         </DialogTrigger>
@@ -600,9 +543,34 @@ const ProductList = ({data , warehouse , stockData}) => {
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
                             <DialogDescription>
-                              <div className='w-full text-center'>
+                            <div className='w-full text-center'>
                                 <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
-                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                                <Button onClick={() => handleStatusChange(el._id , 'Finished')} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button>
+                                <br />
+                                
+                                {
+                                  timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
+                                   
+                                    var draftStartTime = new Date(obj.testing_start_time);
+                                    var draftEndTime = new Date(obj.testing_end_time);
+                                    var timeDiff = draftEndTime - draftStartTime;
+                                    var secondsDiff = Math.floor(timeDiff / 1000);
+                                    var minutesDiff = Math.floor(secondsDiff / 60);
+                                    var hoursDiff = Math.floor(minutesDiff / 60);
+                                    var daysDiff = Math.floor(hoursDiff / 24);
+                                    var remainingHours = hoursDiff % 24;
+                                    var remainingMinutes = minutesDiff % 60;
+                                    var remainingSeconds = secondsDiff % 60;
+
+                                    return (
+                                      <div className='pt-5'>
+                                        
+                                        <p>Time Spent Testing: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                      </div>
+                                    );
+                                  })
+                                }
+                                                            
                               </div>
                               
                             </DialogDescription>
@@ -625,7 +593,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-black relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
                           {el.name}
                           </div>
                         </DialogTrigger>
@@ -633,9 +601,34 @@ const ProductList = ({data , warehouse , stockData}) => {
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
                             <DialogDescription>
-                              <div className='w-full text-center'>
-                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
-                                <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                            <div className='w-full text-center'>
+                                <h2 className='text-lg py-1'>Produkti ka perfunduar</h2>
+                                {/* <Button  variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button> */}
+                                <br />
+                                
+                                {
+                                  timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
+                                   
+                                    var draftStartTime = new Date(obj.total_start_time);
+                                    var draftEndTime = new Date(obj.total_end_time);
+                                    var timeDiff = draftEndTime - draftStartTime;
+                                    var secondsDiff = Math.floor(timeDiff / 1000);
+                                    var minutesDiff = Math.floor(secondsDiff / 60);
+                                    var hoursDiff = Math.floor(minutesDiff / 60);
+                                    var daysDiff = Math.floor(hoursDiff / 24);
+                                    var remainingHours = hoursDiff % 24;
+                                    var remainingMinutes = minutesDiff % 60;
+                                    var remainingSeconds = secondsDiff % 60;
+
+                                    return (
+                                      <div className='pt-5'>
+                                        
+                                        <p>Total Spending Time: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                      </div>
+                                    );
+                                  })
+                                }
+                                                            
                               </div>
                               
                             </DialogDescription>

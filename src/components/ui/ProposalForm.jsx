@@ -358,20 +358,20 @@ const ProposalForm = ({customers , products , warehouse }) => {
                 </div>
           </div>
           {itemsArray && itemsArray.map((el , index) => {
-               return <div  key={index} className='flex gap-3'>
-                <div className='w-[20%]'>
+               return <div  key={index} className='lg:flex lg:flex-row flex-col gap-3'>
+                <div className='lg:w-[20%] w-full'>
                     <label htmlFor="" className='my-2'>
                     Item
                     </label>
                     <input type="text" value={el.name} readOnly placeholder='Subject...' className='w-full my-2 px-1 py-2 border-gray border-2 rounded-md shadow-sm' />
                 </div>
-                <div className='w-[20%]'>
+                <div className='lg:w-[20%] w-full'>
                     <label htmlFor="" className='my-2'>
                     Short Description
                     </label>
                     <input type="text" value={el.description} onChange={(e) => handleDescriptionChange(e.target.value , el.prod_id)}  placeholder='Subject...' className='w-full my-2 px-1 py-2 border-gray border-2 rounded-md shadow-sm' />
                 </div>
-                <div className='w-[20%]'>
+                <div className='lg:w-[20%] w-full'>
 
 
                   <label htmlFor="" className='my-2'>
@@ -380,13 +380,13 @@ const ProposalForm = ({customers , products , warehouse }) => {
                    
                     <input type="number" value={el.qty} max={el.type?.toLowerCase() == 'tek' ? el.min : 1} onChange={(e) => handleQtyChange(e.target.value , el.prod_id , el.type?.toLowerCase() == 'tek' ? el.min : 1 )}   className='w-full my-2 px-1 py-2 border-gray border-2 rounded-md shadow-sm' />
                 </div>
-                <div className='w-[20%]'>
+                <div className='lg:w-[20%] w-full'>
                     <label htmlFor="" className='my-2'>
                     Rate
                     </label>
                     <input type="number" value={el.rate} readOnly   className='w-full my-2 px-1 py-2 border-gray border-2 rounded-md shadow-sm' />
                 </div>
-                <div className='w-[20%]'>
+                <div className='lg:w-[20%] w-full'>
 
                     <label htmlFor="" className='my-2'>
                     Tax

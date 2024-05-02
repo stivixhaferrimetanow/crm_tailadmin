@@ -34,8 +34,8 @@ const Sidebar = ({role}) => {
         setValue(!value)
     }
   return (
-    <div className={  true == true ? `bg-black w-full p-3 h-screen ml-[100%]  xl:ml-0 lg:ml-0  transition-all 2s ease-in-out relative` : `bg-black w-full p-3 h-screen ml-[-100%] xl:ml-0 lg:ml-0 transition-all 2s ease-in-out relative` }>
-             <GrClose className='lg:hidden xl:hidden absolute mt-6 mr-4 top-0 right-0' color='white' fontSize="25px" onClick={handleClick} />
+    <div className={  value == true ? `bg-black w-full p-3 h-screen ml-[100%]  xl:ml-0 lg:ml-0  transition-all 2s ease-in-out relative` : `bg-black w-full p-3 h-screen ml-[-100%] xl:ml-0 lg:ml-0 transition-all 2s ease-in-out relative` }>
+             <GrClose className='lg:hidden xl:hidden cursor-pointer absolute mt-6 mr-4 top-0 right-0' color='white' fontSize="25px" onClick={handleClick} />
              <div className='w-full  flex items-center h-[50px] '>
                 <div className='w-full'>
                     <Link href={'/authed/feed'}>

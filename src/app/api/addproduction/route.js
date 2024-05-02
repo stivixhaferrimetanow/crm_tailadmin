@@ -36,15 +36,18 @@ export async function POST(req) {
       
     });
 
+
+    await newProduction.save();
+
     const newTimestamp = new Timestamp({
-      item_id: _id,
+      item_id: newProduction._id,
       current_status: 'Draft',
       draft_start_time: now,
       total_start_time: now
     });
 
 
-    await newProduction.save();
+    
 
     await newTimestamp.save();
 
