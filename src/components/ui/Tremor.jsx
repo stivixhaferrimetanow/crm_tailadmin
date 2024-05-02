@@ -116,7 +116,7 @@ export default function Tremor() {
         </div>
         <div className="p-4 flex-auto">
           {/* Chart */}
-          <div className="relative h-350-px">
+          <div className="relative h-[500px]">
             <canvas id="bar-chart"></canvas>
           </div>
         </div>

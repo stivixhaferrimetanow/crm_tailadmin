@@ -32,11 +32,11 @@ const page = async ({myData}) => {
     
     <div className='w-full'>
       <div className='w-full p-5 lg:flex xl:flex lg:flex-row xl:flex-row flex-col '>
-        <div className='lg:w-[60%] flex justify-start xl:w-[66%] w-full'>
+        <div className='lg:w-[30%] flex justify-start xl:w-[66%] w-full'>
           <Chart/>
         </div>
 
-        <div className='lg:w-[30%] xl:w-[33%] w-full'>
+        <div className='lg:w-[30%] text-center justify-center xl:w-[33%] w-full'>
             <Additional/>
         </div>
        

@@ -1,36 +1,62 @@
 'use client';
 
-    import React from "react";
+    import React , {useEffect , useState} from "react";
     import Chart from "chart.js";
+    import axios from 'axios'
     
     export default function SecondTremor() {
+
+
+      const [priceData , setPriceData] = useState([])
+
+
+
+      const fetchSecondTremor = async () => {
+        try{
+          const res = await axios.get('http://localhost:3000/api/second_tremor');
+         
+          setPriceData(res.data.data)
+        }catch(error){
+          console.log(error)
+        }
+      }
+
+      console.log(priceData[0] , 'priceData')
+
+      useEffect(() => {
+        fetchSecondTremor();
+      },[])
+
+
+
       React.useEffect(() => {
         var config = {
           type: "line",
           data: {
             labels: [
-              "January",
-              "February",
-              "March",
-              "April",
-              "May",
-              "June",
-              "July",
+              "Started",
+              "Planning",
+              "Research",
+              "Development",
+              "Testing",
+              "Review",
+              "Finished",
             ],
             datasets: [
               {
-                label: new Date().getFullYear(),
+                label: 'Price',
                 backgroundColor: "#3182ce",
                 borderColor: "#3182ce",
-                data: [65, 78, 66, 44, 56, 67, 75],
+                data: [priceData[0], priceData[1] , priceData[2] , priceData[3] , priceData[4], priceData[5], priceData[6]],
+                // data: priceData && priceData,
                 fill: false,
               },
               {
-                label: new Date().getFullYear() - 1,
+                label: 'Quantity',
                 fill: false,
                 backgroundColor: "#edf2f7",
                 borderColor: "#edf2f7",
-                data: [40, 68, 86, 74, 56, 60, 87],
+                data: [0, 1,2, 2, 5, 6, 7],
               },
             ],
           },
@@ -97,7 +123,7 @@
                     drawBorder: false,
                     color: "rgba(255, 255, 255, 0.15)",
                     zeroLineColor: "rgba(33, 37, 41, 0)",
-                    zeroLineBorderDash: [2],
+                    zeroLineBorderDash: [20],
                     zeroLineBorderDashOffset: [2],
                   },
                 },
@@ -123,7 +149,7 @@
             </div>
             <div className="p-4 flex-auto">
               {/* Chart */}
-              <div className="relative h-350-px">
+              <div className="relative h-[500px]">
                 <canvas id="line-chart"></canvas>
               </div>
             </div>

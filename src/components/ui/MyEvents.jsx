@@ -35,10 +35,8 @@ const MyEvents = ({user}) => {
 
   return (
     <div className='mt-5 w-[80%] mx-auto'>
-    <Carousel>
-      <CarouselContent>
-        {data && data.map((el , index) => {
-          return <CarouselItem  key={index} className="cursor-pointer" >
+    {data && data.map((el , index) => {
+          return <div  key={index} className="cursor-pointer my-2 transition-all 0.2s ease-in-out hover:rotate-[2deg]" >
             <div className='bg-black p-5 rounded-xl shadow-lg text-white'>
               <h2>{el.date && el.date}</h2>
               <p>
@@ -46,14 +44,8 @@ const MyEvents = ({user}) => {
               </p>
               
             </div>
-          </CarouselItem>
+          </div>
         })}
-        
-        
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
     </div>
   )
 }

@@ -95,7 +95,7 @@ export default function Chart() {
           colors={showComparison ? ['cyan', 'blue'] : ['blue']}
           valueFormatter={valueFormatter}
           yAxisWidth={45}
-          className="mt-6 hidden h-60 sm:block"
+          className="mt-6 hidden h-[250px] sm:block"
         />
         <BarChart
           data={data}
