@@ -76,7 +76,7 @@ export async function GET(){
 
 
 
-        return NextResponse.json({data: [started_total_price , planning_total_price , research_total_price , development_total_price , testing_total_price , review_total_price , finished_total_price] , status: 200});
+        return NextResponse.json({data: [  JSON.parse(started_total_price)  , JSON.parse(planning_total_price)  ,  JSON.parse(research_total_price)  , JSON.parse(development_total_price)  , JSON.parse(testing_total_price)  , JSON.parse(review_total_price)  , JSON.parse(finished_total_price) ] , status: 200});
 
 
 
