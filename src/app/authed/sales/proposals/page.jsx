@@ -60,13 +60,8 @@ const proposals = await getProposals()
 
   return (
     <div>
-     
-      
-      <ProposalForm    customers={customers && customers} products={products && products} warehouse={warehouse && warehouse}  />
-
-
-      <div className='mt-5'>
-            <div className="relative overflow-x-auto">
+     <div className='my-5'>
+            <div className="relative rounded-lg shadow-lg overflow-x-auto">
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -96,7 +91,7 @@ const proposals = await getProposals()
                 </thead>
                 <tbody>
                       {proposals && proposals.map((el , index) => {
-                        return  <tr className="btext-white uppercase bg-black text-white dark:border-gray-700" key={index}>
+                        return  <tr className="bg-black uppercase border-b-[1px] border-white transition-all 0.2s ease-in-out hover:bg-gray-800 text-white " key={index}>
                         <th
                         scope="row"
                         className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white"
@@ -133,6 +128,11 @@ const proposals = await getProposals()
             </table>
             </div>
       </div>
+      
+      <ProposalForm    customers={customers && customers} products={products && products} warehouse={warehouse && warehouse}  />
+
+
+      
     </div>
   )
 }

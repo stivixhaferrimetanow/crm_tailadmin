@@ -66,20 +66,20 @@ const LeadsTable = ({data}) => {
     }
     return(
         <div className='mt-5'>
-        <div className="relative overflow-x-auto">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <div className="relative overflow-x-auto rounded-lg">
+        <table className="w-full text-sm text-left p-2 rounded-lg shadow-lg rtl:text-right text-white dark:text-gray-400 overflow-x-scroll">
             <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" className="px-6 py-3">
+            <tr className=''>
+                <th scope="col" className="px-6 py-3 ">
                 ID
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 ">
                 Customer Full Name
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 ">
                 Primary Contact
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 ">
                 Email
                 </th>
                 <th scope="col" className="px-6 py-3">
@@ -88,7 +88,7 @@ const LeadsTable = ({data}) => {
                 <th scope="col" className="px-6 py-3">
                 Active
                 </th>
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3 ">
                 Edit
                 </th>
 
@@ -96,18 +96,18 @@ const LeadsTable = ({data}) => {
             </thead>
             <tbody>
                 {leads && leads.map((el , index) => {
-                    return <tr className="btext-white uppercase bg-black dark:border-gray-700" key={index}>
+                    return <tr className="btext-white uppercase border-b-[1px] border-white bg-black dark:border-gray-700 transition-all 0.2s ease-in-out hover:bg-gray-700 " key={index}>
                     <th
                     scope="row"
-                    className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white"
+                    className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white "
                     >
                     {index + 1}
                     </th>
-                    <td className="px-6 py-4">{el.name}</td>
-                    <td className="px-6 py-4">{el.primary_contact}</td>
-                    <td className="px-6 py-4">{el.email}</td>
-                    <td className="px-6 py-4">{el.phone && el.phone}</td>
-                    <td className="px-6 py-4">{el.lead_customer && el.lead_customer == true ? 'Customer' : 'Lead'}</td>
+                    <td className="px-6 py-4 ">{el.name}</td>
+                    <td className="px-6 py-4 ">{el.primary_contact}</td>
+                    <td className="px-6 py-4 ">{el.email}</td>
+                    <td className="px-6 py-4 ">{el.phone && el.phone}</td>
+                    <td className="px-6 py-4 ">{el.lead_customer && el.lead_customer == true ? 'Customer' : 'Lead'}</td>
                     {enable == true ? (<td className='px-6 py-4'>
                     {el.lead_customer && el.lead_customer == true ? 
                     

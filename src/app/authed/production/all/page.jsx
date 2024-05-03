@@ -51,7 +51,8 @@ const page = async () => {
     
     return(
         <div>
-            <h2 className='text-black text-2xl font-semibold py-2'>Production</h2>
+           
+            
             <ProductList  data={data.data && data.data} stockData={stockData.data && stockData.data} warehouse={ warehouse.data && warehouse.data} />
             <br />
             <div className='w-full gap-3 flex'>

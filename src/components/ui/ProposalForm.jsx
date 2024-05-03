@@ -236,7 +236,7 @@ const ProposalForm = ({customers , products , warehouse }) => {
    
 
   return (
-    <div className='w-full mx-auto rounded-lg bg-white' >
+    <div className='w-full my-6 mx-auto rounded-lg bg-white' >
         <div className='flex gap-3 p-4  '>
           <div className='w-[50%]'>
             <div>

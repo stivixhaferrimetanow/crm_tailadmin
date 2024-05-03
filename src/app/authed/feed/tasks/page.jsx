@@ -316,10 +316,10 @@ const page = () => {
     </thead>
     <tbody>
       {tasks && tasks.map((el , index) => {
-        return <tr key={index} className="text-white bg-black border-b dark:bg-gray-800 dark:border-gray-700">
+        return <tr key={index} className="text-white bg-black border-b dark:bg-gray-800 dark:border-gray-700 transition-all 0.2s ease-in-out hover:bg-gray-800">
         <th
           scope="row"
-          className="px-6 py-4 font-medium text-white bg-black"
+          className="px-6 py-4 font-medium text-white"
         >
           {index + 1}
         </th>

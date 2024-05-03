@@ -15,6 +15,15 @@ import {
   import { FaArrowAltCircleRight } from "react-icons/fa";
   import axios from 'axios'
   import { Button } from "@/components/ui/button"
+  import {
+    Sheet,
+    SheetContent,
+    SheetDescription,
+    SheetHeader,
+    SheetTitle,
+    SheetTrigger,
+  } from "@/components/ui/sheet"
+
 
 
 
@@ -138,8 +147,53 @@ const ProductList = ({data , warehouse , stockData}) => {
       // Call the API or update the local state with the new status
   };
 
+
+
+
+  const calculateDateDifference =  ( param1 , param2) => {
+   
+
+
+      var draftStartTime = new Date(param1);
+      var draftEndTime = new Date(param2);
+      var timeDiff = draftEndTime - draftStartTime;
+      var secondsDiff = Math.floor(timeDiff / 1000);
+      var minutesDiff = Math.floor(secondsDiff / 60);
+      var hoursDiff = Math.floor(minutesDiff / 60);
+      var daysDiff = Math.floor(hoursDiff / 24);
+      var remainingHours = hoursDiff % 24;
+      var remainingMinutes = minutesDiff % 60;
+      var remainingSeconds = secondsDiff % 60;
+
+
+      return `${daysDiff} d, ${remainingHours} h, ${remainingMinutes} m, ${remainingSeconds} s`
+
+  }
+
     return(
         <div>
+           <div className='w-full flex  items-center'>
+                <div className='w-[50%] text-start'>
+                    <h2 className='text-black text-2xl font-semibold py-2'>Production</h2>
+                </div>
+                <div className='w-[50%] text-end'>
+                <Sheet>
+                <SheetTrigger>
+                  <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                </SheetTrigger>
+                <SheetContent className="w-[100vh]">
+                  <SheetHeader>
+                    <SheetTitle>Shtoni nje produkt ne Production?</SheetTitle>
+                    <SheetDescription>
+                      This action cannot be undone. This will permanently delete your account
+                      and remove your data from our servers.
+                    </SheetDescription>
+                  </SheetHeader>
+                </SheetContent>
+              </Sheet>
+                  
+                </div>
+            </div>
                 <table className="table-auto w-full rounded-lg shadow-lg">
                 <thead className='bg-black p-2 text-white '>
                     <tr>
@@ -158,7 +212,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                 <tbody className='bg-black text-white'>
                     
                         {data && data.map((el , index) => {
-                            return <tr key={index}>
+                            return <tr key={index} className='border-b-[1px] border-white transition-all ease-in-out 2s hover:bg-gray-800'>
                                         <td className='justify-center text-center py-3'>
                                             
 
@@ -191,9 +245,9 @@ const ProductList = ({data , warehouse , stockData}) => {
                 
 
 
-                <div className='w-full p-2 flex gap-1 bg-black my-5 rounded-lg shadow-lg text-white'>
-                  <div className='w-[10%] text-center'></div>
-                  <div className='w-[10%] text-center flex flex-col'>
+                <div className='w-full p-2 grid grid-cols-4 gap-3 justify-evenly my-5 rounded-lg shadow-lg text-white'>
+                
+                  <div className='w-[100%] text-center  flex flex-col bg-[#232323] p-3 rounded-xl'>
                     <div className='head w-full'>Draft</div>
                     <div className='production-body flex flex-col gap-5 my-2'>
                       <br />
@@ -202,8 +256,18 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
-                          {el.name}
+                        <div key={index} className='border-[1px] text-start cursor-pointer bg-black text-white font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          
+                          <div className='w-full my-2'>
+                            <div className='w-[50px] bg-red-600 px-4 py-1 rounded-2xl'></div>
+                          </div>
+                            <h2 className='text-xl py-3'>{el.name}</h2>
+                            <span className='text-gray-400'>{el.status}</span>
+                            <div className='w-[1%] p-1 bg-blue-500 rounded-xl my-1'></div>
+                            <span className='text-white py-3'>€{el.total_cost}</span>
+                            <div className='w-full text-end'> 
+                              <span className='text-gray-400'>{el.createdAt.substring(0 , 10)}</span>
+                            </div>
                           </div>
                         </DialogTrigger>
                         <DialogContent>
@@ -217,8 +281,9 @@ const ProductList = ({data , warehouse , stockData}) => {
                                 
                                    {timestamps && timestamps.filter((item) => item.item_id == el._id ).map((obj) => {
                                     return <div className='pt-5'>
+                                       <p className='text-lg '>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
+                                      <p className='text-lg'>Draft: <span className='font-semibold'>{obj.draft_start_time.substring(0, 10)},{obj.draft_start_time.substring(11, 19)}</span></p>
                                       
-                                      <p>Draft Started at:{obj.draft_start_time.substring(0, 10)},{obj.draft_start_time.substring(11, 19)}</p>
                                     </div> 
                                   })}
                             
@@ -235,7 +300,7 @@ const ProductList = ({data , warehouse , stockData}) => {
 
                     </div>
                   </div>
-                  <div className='w-[10%] text-center'>
+                  <div className='w-[100%] text-center bg-[#232323] p-3 rounded-xl'>
                     <div className='head w-full'>Started</div>
                     <div className='production-body flex flex-col gap-5 my-2'>
                       <br />
@@ -244,8 +309,18 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog  style={{zIndex : '1000'}}>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
-                          {el.name}
+                        <div key={index} className='border-[1px] text-start cursor-pointer bg-black text-white font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          
+                          <div className='w-full my-2'>
+                            <div className='w-[50px] bg-red-600 px-4 py-1 rounded-2xl'></div>
+                          </div>
+                            <h2 className='text-xl py-3'>{el.name}</h2>
+                            <span className='text-gray-400'>{el.status}</span>
+                            <div className='w-[10%] p-1 bg-blue-500 rounded-xl my-1'></div>
+                            <span className='text-white py-3'>€{el.total_cost}</span>
+                            <div className='w-full text-end'> 
+                              <span className='text-gray-400'>{el.createdAt.substring(0 , 10)}</span>
+                            </div>
                           </div>
                         </DialogTrigger>
                         <DialogContent>
@@ -260,21 +335,20 @@ const ProductList = ({data , warehouse , stockData}) => {
                                 {
                                   timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
                                    
-                                    var draftStartTime = new Date(obj.draft_start_time);
-                                    var draftEndTime = new Date(obj.draft_end_time);
-                                    var timeDiff = draftEndTime - draftStartTime;
-                                    var secondsDiff = Math.floor(timeDiff / 1000);
-                                    var minutesDiff = Math.floor(secondsDiff / 60);
-                                    var hoursDiff = Math.floor(minutesDiff / 60);
-                                    var daysDiff = Math.floor(hoursDiff / 24);
-                                    var remainingHours = hoursDiff % 24;
-                                    var remainingMinutes = minutesDiff % 60;
-                                    var remainingSeconds = secondsDiff % 60;
+                                  
+
+
+                                    const data = calculateDateDifference(obj.draft_start_time , obj.draft_end_time);
+                                 
+                               
 
                                     return (
                                       <div className='pt-5'>
                                         
-                                        <p>From Draft to Started: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                        <p className='text-lg '>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
+                                        <p className='text-lg '>Started: <span className='font-semibold'>{obj.started_start_time.substring(0 ,10)},{obj.started_start_time.substring(11 ,19)}</span> </p>
+                                        <br />
+                                        <p className='text-lg'>Koha ne Draft: <span className='font-semibold'>{data}</span>  </p>
                                       </div>
                                     );
                                   })
@@ -293,7 +367,7 @@ const ProductList = ({data , warehouse , stockData}) => {
 
                     </div>
                   </div>
-                  <div className='w-[10%] text-center'>
+                  <div className='w-[100%] text-center bg-[#232323] p-3 rounded-xl'>
                     <div className='head w-full'>Planning</div>
                     <div className='production-body flex flex-col gap-5 my-2'>
                       <br />
@@ -302,8 +376,18 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
-                          {el.name}
+                        <div key={index} className='border-[1px] text-start cursor-pointer bg-black text-white font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          
+                          <div className='w-full my-2'>
+                            <div className='w-[50px] bg-red-600 px-4 py-1 rounded-2xl'></div>
+                          </div>
+                            <h2 className='text-xl py-3'>{el.name}</h2>
+                            <span className='text-gray-400'>{el.status}</span>
+                            <div className='w-[30%] p-1 bg-blue-500 rounded-xl my-1'></div>
+                            <span className='text-white py-3'>€{el.total_cost}</span>
+                            <div className='w-full text-end'> 
+                              <span className='text-gray-400'>{el.createdAt.substring(0 , 10)}</span>
+                            </div>
                           </div>
                         </DialogTrigger>
                         <DialogContent>
@@ -318,21 +402,18 @@ const ProductList = ({data , warehouse , stockData}) => {
                                 {
                                   timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
                                    
-                                    var draftStartTime = new Date(obj.started_start_time);
-                                    var draftEndTime = new Date(obj.started_end_time);
-                                    var timeDiff = draftEndTime - draftStartTime;
-                                    var secondsDiff = Math.floor(timeDiff / 1000);
-                                    var minutesDiff = Math.floor(secondsDiff / 60);
-                                    var hoursDiff = Math.floor(minutesDiff / 60);
-                                    var daysDiff = Math.floor(hoursDiff / 24);
-                                    var remainingHours = hoursDiff % 24;
-                                    var remainingMinutes = minutesDiff % 60;
-                                    var remainingSeconds = secondsDiff % 60;
 
+                                    
+
+                                    const data = calculateDateDifference(obj.started_start_time , obj.started_end_time )
+                                    const data2 = calculateDateDifference(obj.draft_start_time , obj.draft_end_time)
                                     return (
                                       <div className='pt-5'>
-                                        
-                                        <p>Time Spent Starting: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                         <p className='text-lg '>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
+                                         <p className='text-lg '>Planning:<span className='font-semibold'>{obj.planning_start_time.substring(0 ,10)},{obj.planning_start_time.substring(11 ,19)}</span> </p>
+                                         <br />
+                                         <p className='text-lg '>Koha ne Draft: <span className='font-semibold'>{data2 }</span> </p>
+                                        <p className='text-lg '>Koha ne Starting: <span className='font-semibold'>{data}</span> </p>
                                       </div>
                                     );
                                   })
@@ -351,7 +432,7 @@ const ProductList = ({data , warehouse , stockData}) => {
 
                     </div>
                   </div>
-                  <div className='w-[10%] text-center'>
+                  <div className='w-[100%] text-center bg-[#232323] p-3 rounded-xl'>
                     <div className='head w-full'>Research</div>
                     <div className='production-body flex flex-col gap-5 my-2'>
                       <br />
@@ -360,8 +441,18 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
-                          {el.name}
+                        <div key={index} className='border-[1px] text-start cursor-pointer bg-black text-white font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          
+                          <div className='w-full my-2'>
+                            <div className='w-[50px] bg-red-600 px-4 py-1 rounded-2xl'></div>
+                          </div>
+                            <h2 className='text-xl py-3'>{el.name}</h2>
+                            <span className='text-gray-400'>{el.status}</span>
+                            <div className='w-[50%] p-1 bg-blue-500 rounded-xl my-1'></div>
+                            <span className='text-white py-3'>€{el.total_cost}</span>
+                            <div className='w-full text-end'> 
+                              <span className='text-gray-400'>{el.createdAt.substring(0 , 10)}</span>
+                            </div>
                           </div>
                         </DialogTrigger>
                         <DialogContent>
@@ -376,21 +467,19 @@ const ProductList = ({data , warehouse , stockData}) => {
                                 {
                                   timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
                                    
-                                    var draftStartTime = new Date(obj.planning_start_time);
-                                    var draftEndTime = new Date(obj.planning_end_time);
-                                    var timeDiff = draftEndTime - draftStartTime;
-                                    var secondsDiff = Math.floor(timeDiff / 1000);
-                                    var minutesDiff = Math.floor(secondsDiff / 60);
-                                    var hoursDiff = Math.floor(minutesDiff / 60);
-                                    var daysDiff = Math.floor(hoursDiff / 24);
-                                    var remainingHours = hoursDiff % 24;
-                                    var remainingMinutes = minutesDiff % 60;
-                                    var remainingSeconds = secondsDiff % 60;
+                                    const data = calculateDateDifference(obj.started_start_time , obj.started_end_time )
+                                    const data2 = calculateDateDifference(obj.draft_start_time , obj.draft_end_time)
+                                    const data3 = calculateDateDifference(obj.planning_start_time , obj.planning_end_time)
 
                                     return (
                                       <div className='pt-5'>
                                         
-                                        <p>Time Spent Planning: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
+                                        <p className='text-lg '>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
+                                         <p className='text-lg '>Research:<span className='font-semibold'>{obj.research_start_time.substring(0 ,10)},{obj.research_start_time.substring(11 ,19)}</span> </p>
+                                         <br />
+                                         <p className='text-lg '>Koha ne Draft: <span className='font-semibold'>{data2 }</span> </p>
+                                        <p className='text-lg '>Koha ne Starting: <span className='font-semibold'>{data}</span> </p>
+                                        <p className='text-lg '>Koha ne Planning: <span className='font-semibold'>{data3}</span> </p>
                                       </div>
                                     );
                                   })
@@ -409,7 +498,7 @@ const ProductList = ({data , warehouse , stockData}) => {
 
                     </div>
                   </div>
-                  <div className='w-[10%] text-center'>
+                  <div className='w-[100%] text-center bg-[#232323] p-3 rounded-xl'>
                     <div className='head w-full'>Development</div>
                     <div className='production-body flex flex-col gap-5 my-2'>
                       <br />
@@ -418,8 +507,18 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
-                          {el.name}
+                        <div key={index} className='border-[1px] text-start cursor-pointer bg-black text-white font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          
+                          <div className='w-full my-2'>
+                            <div className='w-[50px] bg-red-600 px-4 py-1 rounded-2xl'></div>
+                          </div>
+                            <h2 className='text-xl py-3'>{el.name}</h2>
+                            <span className='text-gray-400'>{el.status}</span>
+                            <div className='w-[70%] p-1 bg-blue-500 rounded-xl my-1'></div>
+                            <span className='text-white py-3'>€{el.total_cost}</span>
+                            <div className='w-full text-end'> 
+                              <span className='text-gray-400'>{el.createdAt.substring(0 , 10)}</span>
+                            </div>
                           </div>
                         </DialogTrigger>
                         <DialogContent>
@@ -434,22 +533,21 @@ const ProductList = ({data , warehouse , stockData}) => {
                                 {
                                   timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
                                    
-                                    var draftStartTime = new Date(obj.research_start_time);
-                                    var draftEndTime = new Date(obj.research_end_time);
-                                    var timeDiff = draftEndTime - draftStartTime;
-                                    var secondsDiff = Math.floor(timeDiff / 1000);
-                                    var minutesDiff = Math.floor(secondsDiff / 60);
-                                    var hoursDiff = Math.floor(minutesDiff / 60);
-                                    var daysDiff = Math.floor(hoursDiff / 24);
-                                    var remainingHours = hoursDiff % 24;
-                                    var remainingMinutes = minutesDiff % 60;
-                                    var remainingSeconds = secondsDiff % 60;
-
+                                    const data = calculateDateDifference(obj.started_start_time , obj.started_end_time )
+                                    const data2 = calculateDateDifference(obj.draft_start_time , obj.draft_end_time)
+                                    const data3 = calculateDateDifference(obj.planning_start_time , obj.planning_end_time);
+                                    const data4 = calculateDateDifference(obj.research_start_time , obj.research_end_time);
                                     return (
                                       <div className='pt-5'>
                                         
-                                        <p>Time Spent Researching: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
-                                      </div>
+                                      <p className='text-lg '>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
+                                       <p className='text-lg '>Development:<span className='font-semibold'>{obj.development_start_time.substring(0 ,10)},{obj.development_start_time.substring(11 ,19)}</span> </p>
+                                       <br />
+                                       <p className='text-lg '>Koha ne Draft: <span className='font-semibold'>{data2 }</span> </p>
+                                      <p className='text-lg '>Koha ne Starting: <span className='font-semibold'>{data}</span> </p>
+                                      <p className='text-lg '>Koha ne Planning: <span className='font-semibold'>{data3}</span> </p>
+                                      <p className='text-lg '>Koha ne Research: <span className='font-semibold'>{data4}</span> </p>
+                                    </div>
                                     );
                                   })
                                 }
@@ -467,7 +565,7 @@ const ProductList = ({data , warehouse , stockData}) => {
 
                     </div>
                   </div>
-                  <div className='w-[10%] text-center'>
+                  <div className='w-[100%] text-center bg-[#232323] p-3 rounded-xl'>
                     <div className='head w-full'>Testing</div>
                     <div className='production-body flex flex-col gap-5 my-2'>
                       <br />
@@ -476,8 +574,18 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
-                          {el.name}
+                        <div key={index} className='border-[1px] text-start cursor-pointer bg-black text-white font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          
+                          <div className='w-full my-2'>
+                            <div className='w-[50px] bg-red-600 px-4 py-1 rounded-2xl'></div>
+                          </div>
+                            <h2 className='text-xl py-3'>{el.name}</h2>
+                            <span className='text-gray-400'>{el.status}</span>
+                            <div className='w-[80%] p-1 bg-blue-500 rounded-xl my-1'></div>
+                            <span className='text-white py-3'>€{el.total_cost}</span>
+                            <div className='w-full text-end'> 
+                              <span className='text-gray-400'>{el.createdAt.substring(0 , 10)}</span>
+                            </div>
                           </div>
                         </DialogTrigger>
                         <DialogContent>
@@ -492,22 +600,25 @@ const ProductList = ({data , warehouse , stockData}) => {
                                 {
                                   timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
                                    
-                                    var draftStartTime = new Date(obj.development_start_time);
-                                    var draftEndTime = new Date(obj.development_end_time);
-                                    var timeDiff = draftEndTime - draftStartTime;
-                                    var secondsDiff = Math.floor(timeDiff / 1000);
-                                    var minutesDiff = Math.floor(secondsDiff / 60);
-                                    var hoursDiff = Math.floor(minutesDiff / 60);
-                                    var daysDiff = Math.floor(hoursDiff / 24);
-                                    var remainingHours = hoursDiff % 24;
-                                    var remainingMinutes = minutesDiff % 60;
-                                    var remainingSeconds = secondsDiff % 60;
+  
+                                    const data = calculateDateDifference(obj.started_start_time , obj.started_end_time )
+                                    const data2 = calculateDateDifference(obj.draft_start_time , obj.draft_end_time)
+                                    const data3 = calculateDateDifference(obj.planning_start_time , obj.planning_end_time);
+                                    const data4 = calculateDateDifference(obj.research_start_time , obj.research_end_time);
+                                    const data5 = calculateDateDifference(obj.development_start_time , obj.development_end_time);
 
                                     return (
                                       <div className='pt-5'>
                                         
-                                        <p>Time Spent Developing: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
-                                      </div>
+                                      <p className='text-lg '>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
+                                       <p className='text-lg '>Testing:<span className='font-semibold'>{obj.development_start_time.substring(0 ,10)},{obj.development_start_time.substring(11 ,19)}</span> </p>
+                                       <br />
+                                       <p className='text-lg '>Koha ne Draft: <span className='font-semibold'>{data2 }</span> </p>
+                                      <p className='text-lg '>Koha ne Starting: <span className='font-semibold'>{data}</span> </p>
+                                      <p className='text-lg '>Koha ne Planning: <span className='font-semibold'>{data3}</span> </p>
+                                      <p className='text-lg '>Koha ne Research: <span className='font-semibold'>{data4}</span> </p>
+                                      <p className='text-lg '>Koha ne Development: <span className='font-semibold'>{data5}</span> </p>
+                                    </div>
                                     );
                                   })
                                 }
@@ -526,7 +637,7 @@ const ProductList = ({data , warehouse , stockData}) => {
 
                     </div>
                   </div>
-                  <div className='w-[10%] text-center'>
+                  <div className='w-[100%] text-center bg-[#232323] p-3 rounded-xl'>
                     <div className='head w-full'>Review</div>
                     <div className='production-body flex flex-col gap-5 my-2'>
                       <br />
@@ -535,8 +646,18 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
-                          {el.name}
+                        <div key={index} className='border-[1px] text-start cursor-pointer bg-black text-white font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          
+                          <div className='w-full my-2'>
+                            <div className='w-[50px] bg-red-600 px-4 py-1 rounded-2xl'></div>
+                          </div>
+                            <h2 className='text-xl py-3'>{el.name}</h2>
+                            <span className='text-gray-400'>{el.status}</span>
+                            <div className='w-[90%] p-1 bg-blue-500 rounded-xl my-1'></div>
+                            <span className='text-white py-3'>€{el.total_cost}</span>
+                            <div className='w-full text-end'> 
+                              <span className='text-gray-400'>{el.createdAt.substring(0 , 10)}</span>
+                            </div>
                           </div>
                         </DialogTrigger>
                         <DialogContent>
@@ -550,23 +671,28 @@ const ProductList = ({data , warehouse , stockData}) => {
                                 
                                 {
                                   timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
-                                   
-                                    var draftStartTime = new Date(obj.testing_start_time);
-                                    var draftEndTime = new Date(obj.testing_end_time);
-                                    var timeDiff = draftEndTime - draftStartTime;
-                                    var secondsDiff = Math.floor(timeDiff / 1000);
-                                    var minutesDiff = Math.floor(secondsDiff / 60);
-                                    var hoursDiff = Math.floor(minutesDiff / 60);
-                                    var daysDiff = Math.floor(hoursDiff / 24);
-                                    var remainingHours = hoursDiff % 24;
-                                    var remainingMinutes = minutesDiff % 60;
-                                    var remainingSeconds = secondsDiff % 60;
+
+
+                                    const data = calculateDateDifference(obj.started_start_time , obj.started_end_time )
+                                    const data2 = calculateDateDifference(obj.draft_start_time , obj.draft_end_time)
+                                    const data3 = calculateDateDifference(obj.planning_start_time , obj.planning_end_time);
+                                    const data4 = calculateDateDifference(obj.research_start_time , obj.research_end_time);
+                                    const data5 = calculateDateDifference(obj.development_start_time , obj.development_end_time);
+                                    const data6 = calculateDateDifference(obj.testing_start_time , obj.testing_end_time)
 
                                     return (
-                                      <div className='pt-5'>
+                                     <div className='pt-5'>
                                         
-                                        <p>Time Spent Testing: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
-                                      </div>
+                                      <p className='text-lg '>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
+                                       <p className='text-lg '>Review:<span className='font-semibold'>{obj.development_start_time.substring(0 ,10)},{obj.development_start_time.substring(11 ,19)}</span> </p>
+                                       <br />
+                                       <p className='text-lg '>Koha ne Draft: <span className='font-semibold'>{data2 }</span> </p>
+                                      <p className='text-lg '>Koha ne Starting: <span className='font-semibold'>{data}</span> </p>
+                                      <p className='text-lg '>Koha ne Planning: <span className='font-semibold'>{data3}</span> </p>
+                                      <p className='text-lg '>Koha ne Research: <span className='font-semibold'>{data4}</span> </p>
+                                      <p className='text-lg '>Koha ne Development: <span className='font-semibold'>{data5}</span> </p>
+                                      <p className='text-lg '>Koha ne Testing: <span className='font-semibold'>{data6}</span> </p>
+                                    </div>
                                     );
                                   })
                                 }
@@ -584,7 +710,7 @@ const ProductList = ({data , warehouse , stockData}) => {
 
                     </div>
                   </div>
-                  <div className='w-[10%] text-center'>
+                  <div className='w-[100%] text-center bg-[#232323] p-3 rounded-xl'>
                     <div className='head w-full'>Finished</div>
                     <div className='production-body flex flex-col gap-5 my-2'>
                       <br />
@@ -593,8 +719,18 @@ const ProductList = ({data , warehouse , stockData}) => {
                         return <Dialog>
                         <DialogTrigger>
 
-                        <div key={index} className='border-[1px] cursor-pointer bg-white text-black font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
-                          {el.name}
+                        <div key={index} className='border-[1px] text-start cursor-pointer bg-black text-white font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
+                          
+                          <div className='w-full my-2'>
+                            <div className='w-[50px] bg-red-600 px-4 py-1 rounded-2xl'></div>
+                          </div>
+                            <h2 className='text-xl py-3'>{el.name}</h2>
+                            <span className='text-gray-400'>{el.status}</span>
+                            <div className='w-[100%] p-1 bg-blue-500 rounded-xl my-1'></div>
+                            <span className='text-white py-3'>€{el.total_cost}</span>
+                            <div className='w-full text-end'> 
+                              <span className='text-gray-400'>{el.createdAt.substring(0 , 10)}</span>
+                            </div>
                           </div>
                         </DialogTrigger>
                         <DialogContent>
@@ -609,22 +745,28 @@ const ProductList = ({data , warehouse , stockData}) => {
                                 {
                                   timestamps && timestamps.filter((item) => item.item_id === el._id).map((obj) => {
                                    
-                                    var draftStartTime = new Date(obj.total_start_time);
-                                    var draftEndTime = new Date(obj.total_end_time);
-                                    var timeDiff = draftEndTime - draftStartTime;
-                                    var secondsDiff = Math.floor(timeDiff / 1000);
-                                    var minutesDiff = Math.floor(secondsDiff / 60);
-                                    var hoursDiff = Math.floor(minutesDiff / 60);
-                                    var daysDiff = Math.floor(hoursDiff / 24);
-                                    var remainingHours = hoursDiff % 24;
-                                    var remainingMinutes = minutesDiff % 60;
-                                    var remainingSeconds = secondsDiff % 60;
-
+                                    const data = calculateDateDifference(obj.started_start_time , obj.started_end_time )
+                                    const data2 = calculateDateDifference(obj.draft_start_time , obj.draft_end_time)
+                                    const data3 = calculateDateDifference(obj.planning_start_time , obj.planning_end_time);
+                                    const data4 = calculateDateDifference(obj.research_start_time , obj.research_end_time);
+                                    const data5 = calculateDateDifference(obj.development_start_time , obj.development_end_time);
+                                    const data6 = calculateDateDifference(obj.testing_start_time , obj.testing_end_time)
+                                    const data7 = calculateDateDifference(obj.review_start_time , obj.review_end_time);
                                     return (
                                       <div className='pt-5'>
                                         
-                                        <p>Total Spending Time: {daysDiff} d, {remainingHours} h, {remainingMinutes} m, {remainingSeconds} s</p>
-                                      </div>
+                                      <p className='text-lg '>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
+                                      <p className='text-lg '>Ka mbaruar ne: <span className='font-semibold'>{obj.total_end_time.substring(0 ,10)},{obj.total_end_time.substring(11 ,19)}</span> </p>
+                                       <p className='text-lg '>Review:<span className='font-semibold'>{obj.development_start_time.substring(0 ,10)},{obj.development_start_time.substring(11 ,19)}</span> </p>
+                                       <br />
+                                       <p className='text-lg '>Koha ne Draft: <span className='font-semibold'>{data2 }</span> </p>
+                                      <p className='text-lg '>Koha ne Starting: <span className='font-semibold'>{data}</span> </p>
+                                      <p className='text-lg '>Koha ne Planning: <span className='font-semibold'>{data3}</span> </p>
+                                      <p className='text-lg '>Koha ne Research: <span className='font-semibold'>{data4}</span> </p>
+                                      <p className='text-lg '>Koha ne Development: <span className='font-semibold'>{data5}</span> </p>
+                                      <p className='text-lg '>Koha ne Testing: <span className='font-semibold'>{data6}</span> </p>
+                                      <p className='text-lg '>Koha ne Review: <span className='font-semibold'>{data7}</span> </p>
+                                    </div>
                                     );
                                   })
                                 }
@@ -642,7 +784,7 @@ const ProductList = ({data , warehouse , stockData}) => {
 
                     </div>
                   </div>
-                  <div className='w-[10%] text-center'></div>
+                  
                   
                 </div>
         </div>
