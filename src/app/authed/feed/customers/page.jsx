@@ -3,6 +3,7 @@ import AddCustomer from '@/components/ui/AddCustomer'
 import LeadsTable from '@/components/ui/LeadsTable'
 import LeadsExcel from '@/components/ui/LeadsExcel'
 
+import UiCustomers from '@/components/ui/UiCustomers'
 
 const page =  async () => {
 
@@ -24,12 +25,18 @@ const page =  async () => {
 
   return (
     <div>
-        Customers
+        
         <br/>
        
-            <AddCustomer/>
+            {/* <AddCustomer/>
             <LeadsTable  data={data && data} />
-            <LeadsExcel/>
+            <LeadsExcel/> */}
+            <div className='w-[95%] my-3 mx-auto'>
+                <LeadsExcel/>
+            </div>
+            <UiCustomers  data={data} />
+           
+            
       
     </div>
   )

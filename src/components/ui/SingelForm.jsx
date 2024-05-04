@@ -99,7 +99,7 @@ const SingelForm = ({token}) => {
                 </div>
                 <div className='pt-5'>
                     
-                <button  onClick={handleSubmit} className="hover:shadow-form w-full rounded-md bg-black py-3 px-8 text-center text-base font-semibold text-white outline-none">
+                <button  onClick={handleSubmit} className="hover:shadow-form w-full rounded-md bg-[#366FFF] py-3 px-8 text-center text-base font-semibold text-white outline-none">
                     Submit
                 </button>
                 </div>

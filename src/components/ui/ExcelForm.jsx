@@ -40,26 +40,32 @@ function ExcelForm() {
       <input type="file" accept=".csv" className='mx-auto' onChange={handleFileUpload} />
 
       {data.length ? (
-        <table className="w-full  shadow-lg mt-4 p-3 border-black border-[1px]">
-          <thead>
+        <table className="min-w-full divide-y divide-gray-200 overflow-x-scroll">
+          <thead className="bg-gray-50">
             <tr>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>ID</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Name</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Stock</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Type</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Min</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Supplier</th>
+              <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+              <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+              <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+              <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Min</th>
+              <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-white divide-y divide-gray-200">
             {data.map((row, index) => (
                 row.id ? (<tr key={index}>
-                    <td className='w-[20%] p-1  border-black border-[1px]'>{row.id}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.name}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.stock}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.type}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.min}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.supplier}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.id}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.stock}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.type}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.min}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.supplier}</td>
                   </tr>) : (null)
               
             ))}
@@ -68,7 +74,7 @@ function ExcelForm() {
       ) : null}
 
       <br /><br />
-      <button onClick={submitData} className='w-full bg-black px-4 py-2 text-white rounded-lg shadow-md'>Submit</button>
+      <button onClick={submitData} className='w-full bg-[#366FFF] px-4 py-2 text-white rounded-lg shadow-md'>Submit</button>
      
     </div>
   );

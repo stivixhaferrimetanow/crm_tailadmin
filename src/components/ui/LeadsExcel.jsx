@@ -40,32 +40,41 @@ function ExcelForm() {
       <input type="file" accept=".csv" className='mx-auto' onChange={handleFileUpload} />
 
       {data.length ? (
-        <table className="w-full  shadow-lg mt-4 p-3 border-black border-[1px]">
-          <thead>
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-50">
             <tr>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>ID</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Name</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Primary Contact</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Email</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Phone</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>City</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Country</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>Address</th>
-              <th className='w-[20%] p-1 text-start border-black border-[1px]'>ZIP CODE</th>
+              <th  scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+              <th  scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+              <th  scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Primary Contact</th>
+              <th  scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+              <th  scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
+              <th  scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">City</th>
+              <th  scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Country</th>
+              <th  scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+              <th  scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ZIP CODE</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="bg-white divide-y divide-gray-200">
             {data.map((row, index) => (
                 row.id ? (<tr key={index}>
-                    <td className='w-[20%] p-1  border-black border-[1px]'>{index}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.name}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.primary_contact}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.email}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.phone}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.city}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.country}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.address}</td>
-                    <td className='w-[20%] p-1 border-black border-[1px]'>{row.zip_code}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{index}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.primary_contact}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.email}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.phone}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.city}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.country}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.address}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">{row.zip_code}</td>
                   </tr>) : (null)
               
             ))}
@@ -74,7 +83,7 @@ function ExcelForm() {
       ) : null}
 
       <br /><br />
-      <button onClick={submitData} className='w-full bg-black px-4 py-2 text-white rounded-lg shadow-md'>Submit</button>
+      <button onClick={submitData} className='w-full bg-[#366FFF] px-4 py-2 text-white rounded-lg shadow-md'>Submit</button>
      
     </div>
   );

@@ -151,7 +151,7 @@ export async function POST(req) {
       await product.save();
     }
 
-    // await updateStock(composition);
+    await updateStock(composition);
 
     return NextResponse.json({ msg: 'Product added successfully', status: 200 });
   } catch (error) {

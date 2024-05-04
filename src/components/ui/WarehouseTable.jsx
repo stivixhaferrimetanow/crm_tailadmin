@@ -25,47 +25,55 @@ const WarehouseTable = ({data , token}) => {
 
 
     return(
-        <div>
-            <div className='w-full my-4 flex '>
+        <div className='w-[95%] mx-auto '>
+            <div className=' mx-auto my-4 flex '>
            
 
             </div>
-    <table className="w-full text-sm text-left rtl:text-right text-white">
-        <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
+            <div className='h-[80vh] overflow-y-scroll'>
+            <table className="min-w-full divide-y divide-gray-200">
+        <thead className="bg-gray-50">
             <tr>
-            <th className="px-6 py-3">ID</th>
-            <th className="px-6 py-3">Emri</th>
-            <th className="px-6 py-3">Stock</th>
-            <th className="px-6 py-3">Kosto</th>
-            <th className="px-6 py-3">Min ne Stock</th>
-            <th className="px-6 py-3">Type</th>
-            <th className="px-6 py-3">Furnitori</th>
+            <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+            <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Emri</th>
+            <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+            <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kosto</th>
+            <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Min ne Stock</th>
+            <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+            <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Furnitori</th>
             
             </tr>
         </thead>
-        <tbody className='bg-[#949494]'>
+        <tbody className="bg-white divide-y divide-gray-200 ">
             
                 {data && data.map((el , index) => {
-                    return <tr className="btext-white uppercase bg-black dark:border-gray-700" key={index}>
-                                <td className=' px-6 py-4'>
+                    return <tr  key={index}>
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     {index + 1}
                                 </td>
-                                <td className=' px-6 py-4'>
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     {el.name}
                                 </td>
-                                <td className=' px-6 py-4'>
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     {el.stock} x
                                 </td>
-                                <td className=' px-6 py-4'>
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     €{el.cost}
                                 </td>
-                                <td className=' px-6 py-4'>
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     {el.min}
                                 </td>
-                                <td className='px-6 py-4'>
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     {el.type?.toLowerCase()}
                                 </td>
-                                <td className='px-6 py-4'>
+                                <td className="px-6 py-4 whitespace-nowrap">
                                     {el.supplier}
                                 </td>
                                
@@ -76,6 +84,8 @@ const WarehouseTable = ({data , token}) => {
             
         </tbody>
         </table>
+            </div>
+    
         </div>
         
     )

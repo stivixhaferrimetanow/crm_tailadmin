@@ -9,7 +9,7 @@ import UsersTable from '@/components/ui/UsersTable'
 import Additional from '@/components/ui/Additional'
 import  Chart  from '@/components/ui/Chart'
 import Preview from '@/components/ui/Preview'
-
+import UiFeed from '@/components/ui/UiFeed'
 
 const page = async ({myData}) => {
   const cookieStore = cookies();
@@ -30,7 +30,7 @@ const page = async ({myData}) => {
   return (
     <>
     
-    <div className='w-full'>
+    {/* <div className='w-full'>
       <div className='w-full p-5 lg:flex xl:flex lg:flex-row xl:flex-row flex-col '>
         <div className='lg:w-[30%] flex justify-start xl:w-[66%] w-full'>
           <Chart/>
@@ -53,7 +53,9 @@ const page = async ({myData}) => {
       <div className='w-[95%] my-5 lg:my-1 mx-auto flex items-center p-1'>
         <UsersTable/>
       </div>
-    </div>
+    </div> */}
+
+    <UiFeed/>
     </>
    
   )

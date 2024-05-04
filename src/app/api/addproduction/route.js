@@ -4,13 +4,41 @@ import ProductModel from "@/models/product";
 import connect from "@/lib/db";
 import { NextResponse } from "next/server";
 import Timestamp from "@/models/timestamp";
+import SingelProductModel from "@/models/singel";
+
 
 export const dynamic = "force-dynamic";
 
-await connect();
+
+
+
+
+async function updateStock(array) {
+  try {
+    for (let i = 0; i < array.length; i++) {
+      const item1 = array[i];
+      const filter = { _id: item1._id };
+      const update = { $inc: { stock: -item1.stock } };
+      await SingelProductModel.findOneAndUpdate(filter, update);
+    }
+
+    return { msg: 'Stock updated successfully' };
+  } catch (error) {
+    console.error('Error updating the stock:', error);
+    return { msg: 'Error updating the stock' };
+  }
+}
+
+
+
 
 export async function POST(req) {
   try {
+
+    await connect();
+
+
+
     const body = await req.json();
     const { _id } = body;
 
@@ -51,8 +79,13 @@ export async function POST(req) {
 
     await newTimestamp.save();
 
-    // Remove the product from the ProductModel
+    
     await ProductModel.deleteOne({ _id: _id });
+
+
+    return NextResponse.json({data: product.composition})
+    updateStock(product.composition);
+
 
     return NextResponse.json({ msg: 'Product copied to Production and removed from Products', status: 200 });
   } catch (error) {

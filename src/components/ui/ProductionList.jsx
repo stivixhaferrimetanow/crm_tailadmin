@@ -29,6 +29,26 @@ import {
 
 const ProductList = ({data , warehouse , stockData}) => {
 
+  const [products , setProducts] = useState([])
+
+  const getProducts = async () => {
+    try{
+
+      const res = await axios.get('http://localhost:3000/api/products');
+      let myData = res.data.data;
+      if(searchVal == ""){
+        
+        setProducts( myData)
+      }else {
+        let filteredData = myData.filter((el) => el.name.toLowerCase().includes(searchVal.toLowerCase()))
+        setProducts(filteredData)
+      }
+      
+    }catch(error){
+      console.log(error)
+    }
+  }
+
 
 
   const [randomKey , setRandomKey] = useState(1)
@@ -108,6 +128,7 @@ const ProductList = ({data , warehouse , stockData}) => {
         setProgressing(progressiveData);
         setFinished(finishedData);
         getTimeStapms()
+        getProducts()
 
     },[])
 
@@ -124,28 +145,13 @@ const ProductList = ({data , warehouse , stockData}) => {
     }
     
 
+    const [searchVal , setSearchVal] = useState('');
 
-    const handleNext = (id , status) => {
-      let newStatus;
-      switch (status) {
-          case 'Draft':
-              newStatus = 'Started';
-              setStarted([...started, drafted.find(item => item._id === id)]);
-              setDrafted(drafted.filter(item => item._id !== id));
-              break;
-          case 'Started':
-              newStatus = 'Progressing';
-              break;
-          case 'Progressing':
-              newStatus = 'Finished';
-              break;
-          default:
-              newStatus = status;
-              break;
-      }
-  
-      // Call the API or update the local state with the new status
-  };
+
+
+    useEffect(() => {
+      getProducts()
+    },[searchVal])
 
 
 
@@ -170,23 +176,56 @@ const ProductList = ({data , warehouse , stockData}) => {
 
   }
 
+
+  const shtoProdhim = async (id) => {
+    try{
+      const res = await axios.post('http://localhost:3000/api/addproduction', {_id: id} , {'cache': 'no-store'});
+      console.log(res.data.data)
+    }catch(error){
+      console.log(error)
+    }
+  }
+
+
+
+
+
+
+
     return(
         <div>
            <div className='w-full flex  items-center'>
                 <div className='w-[50%] text-start'>
-                    <h2 className='text-black text-2xl font-semibold py-2'>Production</h2>
+                    
                 </div>
                 <div className='w-[50%] text-end'>
                 <Sheet>
                 <SheetTrigger>
-                  <Button variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Button</Button>
+                  <Button variant="outline" className="bg-black my-3 text-white hover:bg-black hover:text-white">Produktet</Button>
                 </SheetTrigger>
                 <SheetContent className="w-[100vh]">
                   <SheetHeader>
                     <SheetTitle>Shtoni nje produkt ne Production?</SheetTitle>
                     <SheetDescription>
-                      This action cannot be undone. This will permanently delete your account
-                      and remove your data from our servers.
+                     <div>
+                      <div>
+                        <input value={searchVal} onChange={(e) => setSearchVal(e.target.value)} type="text" className='focus:outline-none px-4 py-2 w-full text-black my-2 border-[1px] border-black rounded-lg' placeholder='Kerkoni Produktin' />
+                      </div>
+                      <div>
+                        {products && products.map((el , index) => {
+                          return  <div key={index} className='flex items-center my-1 border-[1px] bg-black border-black rounded-lg'>
+                          <div className='w-[50%]text-start flex-col justify-start p-3'>
+                            <h2 className='text-white font-semibold'>{el.name}</h2>
+                            <span className='text-gray text-sm'>€{el.total_cost}</span>
+                          </div>
+                          <div className='w-[50%] text-end flex justify-end p-3'>
+                            <Button   onClick={() => shtoProdhim(el._id)} variant="outline" className="">Shto</Button>
+                          </div>
+                        </div> 
+                        })}
+                         
+                      </div>
+                     </div>
                     </SheetDescription>
                   </SheetHeader>
                 </SheetContent>
@@ -194,43 +233,51 @@ const ProductList = ({data , warehouse , stockData}) => {
                   
                 </div>
             </div>
-                <table className="table-auto w-full rounded-lg shadow-lg">
-                <thead className='bg-black p-2 text-white '>
+                <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                     <tr>
-                    <th>ID</th>
-                    <th>Emri</th>
-                    <th>Lloji</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Emri</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lloji</th>
                     
-                    <th>Kosto Materiali</th>
-                    <th>Kosto Prodhimi</th>
-                    <th>Kosto Totale</th>
-                    <th>Cmimi i Shitjes</th>
-                    <th>Status</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kosto Materiali</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kosto Prodhimi</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kosto Totale</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cmimi i Shitjes</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                   
                     </tr>
                 </thead>
-                <tbody className='bg-black text-white'>
+                <tbody className="bg-white divide-y divide-gray-200">
                     
                         {data && data.map((el , index) => {
-                            return <tr key={index} className='border-b-[1px] border-white transition-all ease-in-out 2s hover:bg-gray-800'>
-                                        <td className='justify-center text-center py-3'>
+                            return <tr key={index} >
+                                        <td className="px-6 py-4 whitespace-nowrap">
                                             
 
                                             
                                             {index + 1}
                                            
                                         </td>
-                                        <td className='justify-center text-center'>{el.name}</td>
-                                        <td className='justify-center text-center'>{el.type}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{el.name}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{el.type}</td>
                                         
-                                        <td className='justify-center text-center'>€
+                                        <td className="px-6 py-4 whitespace-nowrap">€
                                         
                                         {el.composition_cost}
                                         </td>
-                                        <td className='justify-center text-center'>€{el.production_cost}</td>
-                                        <td className='justify-center text-center'>€{el.total_cost}</td>
-                                        <td className='justify-center text-center'>€{el.sales_cost}</td>
-                                        <td className='justify-center text-center'>{el.status}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">€{el.production_cost}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">€{el.total_cost}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">€{el.sales_cost}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{el.status}</td>
                                         
                                      </tr>
                         })}

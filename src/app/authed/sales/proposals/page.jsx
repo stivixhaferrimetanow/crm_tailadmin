@@ -62,58 +62,64 @@ const proposals = await getProposals()
     <div>
      <div className='my-5'>
             <div className="relative rounded-lg shadow-lg overflow-x-auto">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
+            <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                 <tr>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     ID
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Subject
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Client Type
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Email
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Phone
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                     </th>
-                    <th scope="col" className="px-6 py-3">
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       More
                     </th>
 
                 </tr>
                 </thead>
-                <tbody>
+                <tbody className="bg-white divide-y divide-gray-200">
                       {proposals && proposals.map((el , index) => {
-                        return  <tr className="bg-black uppercase border-b-[1px] border-white transition-all 0.2s ease-in-out hover:bg-gray-800 text-white " key={index}>
+                        return  <tr  key={index}>
                         <th
-                        scope="row"
-                        className="px-6 py-4 font-medium text-white whitespace-nowrap dark:text-white"
+                        className="px-6 py-4 whitespace-nowrap"
                         >
                         {index + 1}
                         </th>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 whitespace-nowrap">
                           {el.subject}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 whitespace-nowrap">
                           {el.client_type}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 whitespace-nowrap">
                           {el.email}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 whitespace-nowrap">
                           {el.phone}
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 whitespace-nowrap">
                           {el.status}
                         </td>
-                        <td className="px-6 py-4 " >
+                        <td className="px-6 py-4 whitespace-nowrap" >
                           <Link   href={`/authed/sales/proposals/${el._id}`} >View</Link>
                         </td>
                     </tr>

@@ -53,26 +53,34 @@ const ProductList = ({data , warehouse , stockData}) => {
     
 
     return(
-        <div>
-                <table class="table-auto rounded-lg p-2 shadow-lg w-full">
-                <thead className='bg-black   text-white '>
+        <div className='w-[95%] mx-auto'>
+                <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
                     <tr>
-                    <th>ID</th>
-                    <th>Emri</th>
-                    <th>Lloji</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Emri</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Lloji</th>
                     
-                    <th>Kosto Materiali</th>
-                    <th>Kosto Prodhimi</th>
-                    <th>Kosto Totale</th>
-                    <th>Cmimi i Shitjes</th>
-                    <th>Production</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kosto Materiali</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kosto Prodhimi</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kosto Totale</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cmimi i Shitjes</th>
+                    <th scope="col"
+                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Production</th>
                     </tr>
                 </thead>
-                <tbody className='bg-black  p-2 text-white '>
+                <tbody className="bg-white divide-y divide-gray-200">
                     
                         {data && data.map((el , index) => {
                             return <tr key={index}  >
-                                        <td className='justify-center text-center py-4'>
+                                        <td className="px-6 py-4 whitespace-nowrap">
                                             
 
                                             <Dialog>
@@ -89,17 +97,17 @@ const ProductList = ({data , warehouse , stockData}) => {
                                             </DialogContent>
                                             </Dialog>
                                         </td>
-                                        <td className='justify-center text-center'>{el.name}</td>
-                                        <td className='justify-center text-center'>{el.type}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{el.name}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">{el.type}</td>
                                         
-                                        <td className='justify-center text-center'>€
+                                        <td className="px-6 py-4 whitespace-nowrap">€
                                         
                                         {el.composition_cost}
                                         </td>
-                                        <td className='justify-center text-center'>€{el.production_cost}</td>
-                                        <td className='justify-center text-center'>€{el.total_cost}</td>
-                                        <td className='justify-center text-center'>€{el.sales_cost}</td>
-                                        <td className='justify-center text-center'>
+                                        <td className="px-6 py-4 whitespace-nowrap">€{el.production_cost}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">€{el.total_cost}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">€{el.sales_cost}</td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
                                             <button className='px-4 py-1 rounded-md shadow-lg bg-black text-white' onClick={() => shto(el._id)}>Shto</button>
                                         </td>
                                      </tr>

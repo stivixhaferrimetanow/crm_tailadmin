@@ -47,7 +47,7 @@
                 label: 'Price',
                 backgroundColor: "#3182ce",
                 borderColor: "#3182ce",
-                data: priceData && priceData,
+                data: [0, 1,2, 2, 5, 6, 7],
                 fill: false,
               },
               {

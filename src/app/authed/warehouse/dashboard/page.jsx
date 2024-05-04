@@ -37,7 +37,7 @@ const page = async () => {
     return(
         <div>
             
-            <h2 className='text-black text-2xl font-semibold py-2'>Warehouse</h2>
+            
             <WarehouseTable  data={data && data.data} tpken={token && token} />
            
         </div>

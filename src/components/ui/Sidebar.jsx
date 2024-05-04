@@ -176,7 +176,7 @@ const Sidebar = ({role}) => {
 
 
 
-      <AccordionItem value="item-3" >
+      {/* <AccordionItem value="item-3" >
         <AccordionTrigger className="text-white border-0 hover:border-0 hover:underline-offset-0  h-[50px]" >
             <div className='w-full flex items-center'>
                 <div className='w-[10%]'>
@@ -224,7 +224,7 @@ const Sidebar = ({role}) => {
               
             </div>
         </AccordionContent>
-      </AccordionItem>
+      </AccordionItem> */}
 
 
 
