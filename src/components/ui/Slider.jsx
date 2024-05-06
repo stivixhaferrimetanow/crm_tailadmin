@@ -131,7 +131,7 @@ export default function Slider({data}) {
                 
               </div>
               <div className='w-full flex text-start justify-start'>
-                <h1 className='text-6xl font-semibold pl-5 pt-[13%]'>12</h1>
+                <h1 className='text-6xl font-semibold pl-5 pt-[13%]'>{data.payments && data.payments.length}</h1>
               </div>
         </SwiperSlide>
       </Swiper>

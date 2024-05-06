@@ -225,7 +225,7 @@ const UiPayments = () => {
                 <Tabs defaultValue="account" className="w-full">
                 <TabsList className="bg-[#EDEDED]">
                     <TabsTrigger value="account" className="rounded-none  text-[#A5F403]">Money In</TabsTrigger>
-                    <TabsTrigger value="password" className="rounded-none  text-[#A5F403]">Money Out</TabsTrigger>
+                  
                 </TabsList>
                 <TabsContent value="account">
                 <div className='flex-col mt-3  overflow-y-scroll h-[40vh]'>
@@ -234,7 +234,7 @@ const UiPayments = () => {
                                 <div className='w-[50px] h-[50px] bg-[#635BFF]'></div>
                             </div>
                             <div className='w-[90%]'>
-                                <h2 className='font-semibold text-lg'>Stripe</h2>
+                                <h2 className='font-semibold text-lg'>Stripe  <span className='text-[#635BFF]'>{data.stripe_percentage}%</span> </h2>
                                 <span className='text-sm text-gray-600'>
                                     <Progress className="h-[5px] mt-2" color="#FF5733" value={data.stripe_percentage} />
                                 </span>
@@ -246,7 +246,7 @@ const UiPayments = () => {
                                 <div className='w-[50px] h-[50px] bg-black'></div>
                             </div>
                             <div className='w-[90%]'>
-                                <h2 className='font-semibold text-lg'>Apple Pay</h2>
+                                <h2 className='font-semibold text-lg'>Apple Pay: <span className='text-black'>{data.apple_pay_percentage}%</span></h2>
                                 <span className='text-sm text-gray-600'>
                                     <Progress className="h-[5px] mt-2" color="#FF5733" value={data.apple_pay_percentage} />
                                 </span>
@@ -258,7 +258,7 @@ const UiPayments = () => {
                                 <div className='w-[50px] h-[50px] bg-[#023087]'></div>
                             </div>
                             <div className='w-[90%]'>
-                                <h2 className='font-semibold text-lg'>PayPal</h2>
+                                <h2 className='font-semibold text-lg'>PayPal: <span className='text-[#023087]'>{data.paypal_percentage}%</span></h2>
                                 <span className='text-sm text-gray-600'>
                                     <Progress className="h-[5px] mt-2" color="#FF5733" value={data.paypal_percentage} />
                                 </span>
@@ -270,7 +270,7 @@ const UiPayments = () => {
                                 <div className='w-[50px] h-[50px] bg-[#2DA94F]'></div>
                             </div>
                             <div className='w-[90%]'>
-                                <h2 className='font-semibold text-lg'>Google Pay</h2>
+                                <h2 className='font-semibold text-lg'>Google Pay: <span className='text-[#2DA94F]'>{data.google_pay_percentage}%</span></h2>
                                 <span className='text-sm text-gray-600'>
                                     <Progress className="h-[5px] mt-2" color="#FF5733" value={data.google_pay_percentage} />
                                 </span>
@@ -282,7 +282,7 @@ const UiPayments = () => {
                                 <div className='w-[50px] h-[50px] bg-[#1a241d]'></div>
                             </div>
                             <div className='w-[90%]'>
-                                <h2 className='font-semibold text-lg'>Credit and Debit Card</h2>
+                                <h2 className='font-semibold text-lg'>Credit and Debit Card: <span className='text-[#1a241d]'>{data.credit_debit_percentage}%</span></h2>
                                 <span className='text-sm text-gray-600'>
                                     <Progress className="h-[5px] mt-2" color="#FF5733" value={data.credit_debit_percentage} />
                                 </span>
@@ -294,7 +294,7 @@ const UiPayments = () => {
                                 <div className='w-[50px] h-[50px] bg-[#1E4BC6]'></div>
                             </div>
                             <div className='w-[90%]'>
-                                <h2 className='font-semibold text-lg'>Samsung Pay</h2>
+                                <h2 className='font-semibold text-lg'>Samsung Pay: <span className='text-[#1E4BC6]'>{data.samsung_pay_percentage}%</span></h2>
                                 <span className='text-sm text-gray-600'>
                                     <Progress className="h-[5px] mt-2" color="#FF5733" value={data.samsung_pay_percentage} />
                                 </span>
@@ -306,7 +306,7 @@ const UiPayments = () => {
                                 <div className='w-[50px] h-[50px] bg-[#F7931A]'></div>
                             </div>
                             <div className='w-[90%]'>
-                                <h2 className='font-semibold text-lg'>CryptoCurrency</h2>
+                                <h2 className='font-semibold text-lg'>CryptoCurrency: <span className='text-[#F7931A]'>{data.cryptocurrency_percentage}%</span></h2>
                                 <span className='text-sm text-gray-600'>
                                     <Progress className="h-[5px] mt-2" color="#FF5733" value={data.cryptocurrency_percentage} />
                                 </span>
@@ -318,7 +318,7 @@ const UiPayments = () => {
                                 <div className='w-[50px] h-[50px] bg-[#FFDE38]'></div>
                             </div>
                             <div className='w-[90%]'>
-                                <h2 className='font-semibold text-lg'>WesterUnion</h2>
+                                <h2 className='font-semibold text-lg'>WesterUnion: <span className='text-[#FFDE38]'>{data.westernunion_percentage}%</span></h2>
                                 <span className='text-sm text-gray-600'>
                                     <Progress className="h-[5px] mt-2" color="#FF5733" value={data.westernunion_percentage} />
                                 </span>
@@ -330,7 +330,7 @@ const UiPayments = () => {
                                 <div className='w-[50px] h-[50px] bg-[#424242]'></div>
                             </div>
                             <div className='w-[90%]'>
-                                <h2 className='font-semibold text-lg'>Other</h2>
+                                <h2 className='font-semibold text-lg'>Other: <span className='text-[#424242]'>{data.other_percentage}%</span></h2>
                                 <span className='text-sm text-gray-600'>
                                     <Progress className="h-[5px] mt-2" color="#FF5733" value={data.other_percentage} />
                                 </span>
@@ -339,7 +339,7 @@ const UiPayments = () => {
                         </div>
                     </div>
                 </TabsContent>
-                <TabsContent value="password">
+                {/* <TabsContent value="password">
                 <div className='flex-col mt-3  overflow-y-scroll h-[40vh]'>
                         <div className='flex gap-2 bg-white py-2 px-5 border-gray-600 border-b-[1px]'>
                             <div className='w-[10%]'>
@@ -450,7 +450,7 @@ const UiPayments = () => {
                             
                         </div>
                     </div>
-                </TabsContent>
+                </TabsContent> */}
                 </Tabs>
                 </div>
             </div>
