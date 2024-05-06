@@ -1,8 +1,11 @@
 import React from 'react'
+import UiPayments from '@/components/ui/UiPayments'
 
 const page = () => {
   return (
-    <div>Payments</div>
+    <div className=''>
+      <UiPayments/>
+    </div>
   )
 }
 

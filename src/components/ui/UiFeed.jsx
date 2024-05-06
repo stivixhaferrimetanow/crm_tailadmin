@@ -529,7 +529,7 @@ const UiFeed = () => {
                                             if (el.members.includes(user._id)) {
                                                 return (
                                                     <div key={user._id} >
-                                                        <p>{user.name}</p>
+                                                        <p className='font-bold text-lg'>{user.name}</p>
                                                         <p>{user.email}</p>
                                                     </div>
                                                 );

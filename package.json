@@ -74,6 +74,7 @@
     "react-resizable-panels": "^2.0.12",
     "resend": "^3.2.0",
     "sonner": "^1.4.32",
+    "swiper": "^11.1.1",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "uploadthing": "^6.5.2",

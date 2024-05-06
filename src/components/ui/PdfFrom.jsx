@@ -165,7 +165,7 @@ const sendMail = async () => {
 
     return(
         <div className='w-full p-2'>
-        <div className='w-full my-4 flex gap-3 items-center'>
+        <div className='w-[90%] mx-auto px-4 my-4 flex gap-3 items-center'>
 
         
 
@@ -255,7 +255,7 @@ const sendMail = async () => {
             
         </div>
         
-            <div className="container border-t-4 border-b-4 pb-4 border-black-500">
+            <div className="container bg-white border-t-4 border-b-4 pb-4 border-black-500">
             <div className="flex flex-row justify-between my-6">
                 <div className="flex flex-col">
                 <div className="">

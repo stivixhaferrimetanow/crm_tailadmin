@@ -105,7 +105,7 @@ const Sidebar = ({role}) => {
         }
             
             
-            <AccordionContent className="text-white ">
+            {/* <AccordionContent className="text-white ">
             <div className='w-full flex items-center'>
                 <div className='w-[30%]'>
                     
@@ -118,7 +118,7 @@ const Sidebar = ({role}) => {
                 </div>
               
             </div>
-            </AccordionContent>
+            </AccordionContent> */}
             
         
       </AccordionItem>
@@ -307,20 +307,20 @@ const Sidebar = ({role}) => {
            
          </div>
      </AccordionContent>
-     {/* <AccordionContent className="text-white h-[50px]">
+     <AccordionContent className="text-white h-[50px]">
          <div className='w-full flex items-center'>
              <div className='w-[30%]'>
                  
              </div>
              <div className='w-[70%] flex'>
-                 <Link href={`/authed/sales/items`} className='flex' >
-                 <h3 className='text-[16px] pt-3'>- Drafts</h3>
+                 <Link href={`/authed/sales/payments`} className='flex' >
+                 <h3 className='text-[16px] pt-3'>- Payments</h3>
                  <span className='bg-[#3C50E0] mt-3 ml-2 text-[10px]' style={{display: 'inline-block'}}>Admin</span>
                  </Link>
              </div>
            
          </div>
-     </AccordionContent> */}
+     </AccordionContent>
    
      <AccordionContent className="text-white h-[50px]">
          <div className='w-full flex items-center'>
