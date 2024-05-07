@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge"
 import Link from 'next/link'
 import { useMyContext } from '@/app/context/context';
 import { GrClose } from "react-icons/gr";
+import { RiDashboardHorizontalFill } from "react-icons/ri";
 
 const Sidebar = ({role}) => {
 
@@ -69,6 +70,7 @@ const Sidebar = ({role}) => {
             </div>
             <div className='w-[70%] flex items-center gap-2'>
                 <Link href={'/authed/feed'} className='flex'>
+                
                     <h3 className='text-[16px] pt-3 '>- Overview</h3>
                     <span className='bg-[#3C50E0] mt-3 ml-2 text-[10px]' style={{display: 'inline-block'}}>Admin</span>
                 </Link>

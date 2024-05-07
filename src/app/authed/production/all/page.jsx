@@ -46,9 +46,22 @@ const page = async () => {
         }
     }
 
+
+    const fetchSecondTremor = async () => {
+        try {
+          const res = await fetch('http://localhost:3000/api/second_tremor', { cache: 'no-store' });
+          const data = await res.json();
+          return data.data
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
     const stockData = await getStock()
     const warehouse = await fetchWarehouse()
-    
+    const chartData =  await fetchSecondTremor();
+
+    console.log(chartData , 'chartData')
     return(
         <div>
            
@@ -57,7 +70,7 @@ const page = async () => {
             <br />
             <div className='w-full gap-3 flex'>
                 <div className='w-[50%] bg-black rounded-lg'>
-                    <SecondTremor/>
+                    <SecondTremor chartData={chartData}/>
                 </div>
                 <div className=' w-[50%] rounded-lg' >
                     <Tremor/>

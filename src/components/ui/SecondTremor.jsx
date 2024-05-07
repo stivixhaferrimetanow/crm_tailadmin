@@ -4,32 +4,34 @@
     import Chart from "chart.js";
     import axios from 'axios'
     
-    export default function SecondTremor() {
+    export default function SecondTremor({chartData}) {
+
+      const [priceData, setPriceData] = useState([]);
+
+      const dynamicData = [1, 2, 3, 4, 5, 6, 7];
 
 
-      const [priceData , setPriceData] = useState([])
-
-
-
+      console.log(chartData)
+    
       const fetchSecondTremor = async () => {
-        try{
+        try {
           const res = await axios.get('http://localhost:3000/api/second_tremor');
-         
-          setPriceData(res.data.data)
-        }catch(error){
-          console.log(error)
+          setPriceData(res.data.data);
+          
+        } catch (error) {
+          console.log(error);
         }
-      }
+      };
+    
 
-      console.log(priceData[0] , 'priceData')
-
+      
       useEffect(() => {
         fetchSecondTremor();
-      },[])
+      }, []);
 
-
-
+      
       React.useEffect(() => {
+     
         var config = {
           type: "line",
           data: {
@@ -45,18 +47,13 @@
             datasets: [
               {
                 label: 'Price',
+                fill: false,
                 backgroundColor: "#3182ce",
                 borderColor: "#3182ce",
-                data: [0, 1,2, 2, 5, 6, 7],
-                fill: false,
+                data:chartData, 
+              
               },
-              {
-                label: 'Quantity',
-                fill: false,
-                backgroundColor: "#edf2f7",
-                borderColor: "#edf2f7",
-                data: [0, 1,2, 2, 5, 6, 7],
-              },
+             
             ],
           },
           options: {
@@ -147,7 +144,6 @@
               </div>
             </div>
             <div className="p-4 flex-auto">
-              {/* Chart */}
               <div className="relative h-[500px]">
                 <canvas id="line-chart"></canvas>
               </div>
