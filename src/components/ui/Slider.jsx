@@ -73,11 +73,12 @@ export default function Slider({data}) {
                 </div>
                 <div className='w-[50%] text-start justify-start pt-1 gap-2 flex items-center'>
                         <MdArrowOutward className='bg-[#A5F403]  rounded-full' />
-                        <span>12.3%</span>
+                        {data.today_difference > 0 ? (<span className='text-green-600'>+{data.today_difference}€</span>) : (<span className='text-red-600'>{data.today_difference}€</span>)}
+                        
                 </div>
               </div>
               <div className='w-full flex text-start justify-start'>
-                <h1 className='text-6xl font-semibold pl-5 pt-[13%]'>€{data.total_balance}</h1>
+                <h1 className='text-6xl font-semibold pl-5 pt-[13%]'>€{data.today_total_payment}</h1>
               </div>
         </SwiperSlide>
         <SwiperSlide className='rounded-lg cursor-pointer'>
@@ -93,30 +94,14 @@ export default function Slider({data}) {
                 </div>
                 <div className='w-[50%] text-start justify-start pt-1 gap-2 flex items-center'>
                         <MdArrowOutward className='bg-[#A5F403]  rounded-full' />
-                        <span>12.3%</span>
+                        {data.today_tax_diff > 0 ? (<span className='text-green-600'>+{data.today_tax_diff}€</span>) : (<span className='text-red-600'>{data.today_tax_diff}€</span>)}
                 </div>
               </div>
               <div className='w-full flex text-start justify-start'>
-                <h1 className='text-6xl font-semibold pl-5 pt-[13%]'>€{data.tax_reserve}</h1>
+                <h1 className='text-6xl font-semibold pl-5 pt-[13%]'>€{data.today_tax}</h1>
               </div>
         </SwiperSlide>
-        <SwiperSlide className='rounded-lg cursor-pointer'>
-              <div className='p-5 flex items-center'>
-                <div className='w-[50px] justify-center flex items-center h-[50px] text-center rounded-full bg-[#A5F403]'>
-                  <FaCreditCard className='text-2xl' />
-                </div>
-               
-              </div>
-              <div className='pt-5 px-5 flex items-center'>
-                <div className='w-full flex justify-start text-start'>
-                  <h2 className='pl-2 text-xl'>Most Used Payment Method:</h2>
-                </div>
-               
-              </div>
-              <div className='w-full flex text-start justify-start px-4'>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Visa_Logo.png/640px-Visa_Logo.png" style={{width: '50%'}} className='w-[50%] mt-[12%] object-contain' alt="" />
-              </div>
-        </SwiperSlide>
+        
         <SwiperSlide className='rounded-lg cursor-pointer'>
               <div className='p-5 flex items-center'>
                 <div className='w-[50px] justify-center flex items-center h-[50px] text-center rounded-full bg-[#A5F403]'>
@@ -133,6 +118,9 @@ export default function Slider({data}) {
               <div className='w-full flex text-start justify-start'>
                 <h1 className='text-6xl font-semibold pl-5 pt-[13%]'>{data.payments && data.payments.length}</h1>
               </div>
+        </SwiperSlide>
+        <SwiperSlide className='cursor-pointer bg-none bg-opacity-0 rounded-2xl' style={{backgroundImage: `url('/14.svg')`, backgroundSize : '110%' , backgroundPosition: 'center' , backgroundRepeat: 'no-repeat'}}>
+         
         </SwiperSlide>
       </Swiper>
 

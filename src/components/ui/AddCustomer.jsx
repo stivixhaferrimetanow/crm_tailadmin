@@ -15,6 +15,7 @@ import {
   AlertDialogAction,
 } from '@/components/ui/alert-dialog';
 import { Switch } from '@/components/ui/switch';
+import { TiUserAdd } from "react-icons/ti";
 
 const AddCustomer = () => {
   const [name, setName] = useState('');
@@ -41,7 +42,8 @@ const AddCustomer = () => {
         zip_code: zip_code,
       } ,{'cache': 'no-store'});
       console.log(res);
-      toast('Customer added successfully')
+      toast('Customer added successfully');
+      window.location.reload();
     } catch (error) {
       toast('Error adding the customer');
       console.log(error);
@@ -52,17 +54,18 @@ const AddCustomer = () => {
     <div className="w-full flex gap-2 items-center py-2">
       <AlertDialog>
         <AlertDialogTrigger>
-          <Button variant="outline" className="text-white bg-black hover:bg-black hover:text-white">
+          <Button variant="outline" className="text-white gap-2 bg-black hover:bg-black hover:text-white">
+            <TiUserAdd />
             Add Customer
           </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Add a Customer</AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogDescription className="gap-3 flex-col">
               <input
                 type="text"
-                className="px-1 py-2 my-2 rounded-xl shadow-sm focus:outline-none"
+                className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400 my-2'
                 placeholder="Enter Customer Name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -70,7 +73,7 @@ const AddCustomer = () => {
               <br />
               <input
                 type="text"
-                className="px-1 py-2 my-2 rounded-xl shadow-sm focus:outline-none"
+                className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400 my-2'
                 placeholder="Enter Primary Contact"
                 value={primaryContact}
                 onChange={(e) => setPrimaryContact(e.target.value)}
@@ -78,7 +81,7 @@ const AddCustomer = () => {
               <br />
               <input
                 type="text"
-                className="px-1 py-2 my-2 rounded-xl shadow-sm focus:outline-none"
+                className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400 my-2'
                 placeholder="Enter Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -86,7 +89,7 @@ const AddCustomer = () => {
               <br />
               <input
                 type="text"
-                className="px-1 py-2 my-2 rounded-xl shadow-sm focus:outline-none"
+                className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400 my-2'
                 placeholder="Enter Phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -95,7 +98,7 @@ const AddCustomer = () => {
               <select
                 name=""
                 id=""
-                className="my-2 w-full rounded-md shadow-sm focus:outline-none"
+                className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400 my-2'
                 value={active}
                 onChange={(e) => setActive(e.target.value)}
               >
@@ -106,7 +109,7 @@ const AddCustomer = () => {
               
               <input
                 type="text"
-                className="px-1 py-2 my-2 rounded-xl shadow-sm focus:outline-none"
+                className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400 my-2'
                 placeholder="Enter City"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
@@ -114,7 +117,7 @@ const AddCustomer = () => {
               <br />
               <input
                 type="text"
-                className="px-1 py-2 my-2 rounded-xl shadow-sm focus:outline-none"
+                className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400 my-2'
                 placeholder="Enter Country"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
@@ -122,7 +125,7 @@ const AddCustomer = () => {
               <br />
               <input
                 type="text"
-                className="px-1 py-2 my-2 rounded-xl shadow-sm focus:outline-none"
+                className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400 my-2'
                 placeholder="Enter Address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
@@ -130,7 +133,7 @@ const AddCustomer = () => {
               <br />
               <input
                 type="number"
-                className="px-1 py-2 my-2 rounded-xl shadow-sm focus:outline-none"
+                className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400 my-2'
                 placeholder="Enter ZIP CODE"
                 value={zip_code}
                 onChange={(e) => setZipCode(e.target.value)}

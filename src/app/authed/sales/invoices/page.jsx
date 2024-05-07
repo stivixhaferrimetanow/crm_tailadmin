@@ -26,7 +26,7 @@ const page = () => {
   },[])
   return (
     <div>
-      <div className='px-4 text-semibold'>
+      <div className='w-[95%] mx-auto my-4 text-semibold'>
         Invocies
       </div>
       <div className='w-[95%] mx-auto'>
@@ -38,6 +38,9 @@ const page = () => {
       <tr>
         <th scope="col" className="px-6 py-3">
           ID
+        </th>
+        <th scope="col" className="px-6 py-3">
+          Invoice ID
         </th>
         <th scope="col" className="px-6 py-3">
           Subject
@@ -66,6 +69,7 @@ const page = () => {
         >
           {index + 1}
         </th>
+        <td className="px-6 py-4 font-semibold">{el._id}</td>
         <td className="px-6 py-4">{el.subject}</td>
         <td className="px-6 py-4">{el.client_type}</td>
         <td className="px-6 py-4">{el.email}</td>

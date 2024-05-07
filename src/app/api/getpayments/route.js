@@ -31,6 +31,27 @@ export async function GET(){
         var other_count = 0;
 
 
+
+        var today_total_payment = 0;
+        var yesterday_total_payment = 0;
+        var today_difference = 0;
+
+
+        var today_tax = 0;
+        var yesterday_tax = 0;
+        var today_tax_diff = 0;
+
+
+
+
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = ('0' + (today.getMonth() + 1)).slice(-2); 
+        var day = ('0' + today.getDate()).slice(-2); 
+        var todayDate = year + "-" + month + "-" + day;
+        var yesterdayDate = year + "-" + month - 1 + "-" + day 
+
+
         payments.map((el) => {
             total_balance += el.value;
             tax_reserve += el.tax;
@@ -55,7 +76,30 @@ export async function GET(){
             }else if(el.payment_method == 'other'){
                 other_count += 1
             }
+
+
+
+            console.log(el.createdAt.toISOString().substring(5  , 7))
+
+
+            if(el.createdAt.toISOString().substring(5  , 7) == month){
+                today_total_payment += el.value;
+                today_tax += el.tax
+            }
+            if(el.createdAt.toISOString().substring(4  , 6) == month - 1){
+                yesterday_total_payment += el.value;
+                yesterday_tax += el.tax
+            }
+
+
         });
+
+
+        today_difference =   today_total_payment - yesterday_total_payment;
+        today_tax_diff =   today_tax - yesterday_tax ;
+
+      
+
 
 
         var totalCount = credit_debit_count + apple_pay_count + stripe_count + google_pay_count + paypal_count + samsung_pay_count + cryptocurrency_count + westernunion_count + other_count;
@@ -70,6 +114,9 @@ export async function GET(){
         var cryptocurrencyPercentage = (cryptocurrency_count / totalCount) * 100;
         var westernUnionPercentage = (westernunion_count / totalCount) * 100;
         var otherPercentage = (other_count / totalCount) * 100;
+
+
+        
 
 
         
@@ -95,7 +142,11 @@ export async function GET(){
             samsung_pay_percentage: samsungPayPercentage.toFixed(2) ,
             cryptocurrency_percentage: cryptocurrencyPercentage.toFixed(2) ,
             westernunion_percentage: westernUnionPercentage.toFixed(2) ,
-            other_percentage: otherPercentage.toFixed(2) 
+            other_percentage: otherPercentage.toFixed(2) ,
+            today_total_payment: today_total_payment,
+            today_difference: today_difference,
+            today_tax: today_tax,
+            today_tax_diff: today_tax_diff,
         };
 
         return NextResponse.json({data: responseData})

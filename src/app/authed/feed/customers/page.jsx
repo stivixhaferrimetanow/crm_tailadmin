@@ -32,6 +32,11 @@ const page =  async () => {
             <LeadsTable  data={data && data} />
             <LeadsExcel/> */}
             <div className='w-[95%] my-3 mx-auto'>
+                Shtoni Nje Lead
+                <AddCustomer/>
+            </div>
+            <div className='w-[95%] my-3 mx-auto'>
+                Shtoni Leads me file CSV
                 <LeadsExcel/>
             </div>
             <UiCustomers  data={data} />

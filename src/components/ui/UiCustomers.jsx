@@ -9,12 +9,19 @@ const UiCustomers = ({data}) => {
     const [customers, setCustomers] = useState([]);
     const [leads, setLeads] = useState([]);
 
+
+    const [active , setActive] = useState([]);
+    const [not_active , setNotActive] = useState([])
+
     const fetchUsers = () => {
         const filteredCustomers = data.filter((el) => el.lead_customer === true);
         const filteredLeads = data.filter((el) => el.lead_customer === false);
-
+        const activeLeads = filteredLeads.filter((el) => el.active == "active")
+        const notActiveLeads = filteredLeads.filter((el) => el.active != "active" )
         setCustomers(filteredCustomers);
         setLeads(filteredLeads);
+        setActive(activeLeads);
+        setNotActive(notActiveLeads)
     };
 
     useEffect(() => {
@@ -24,13 +31,14 @@ const UiCustomers = ({data}) => {
 
     return(
         <div className='w-[95%] lg:flex lg:flex-row flex-col flex-row  gap-5 mx-auto bg-white my-2 p-3 rounded-lg shadow-lg'>
+                
                 <div className='lg:w-[33%] w-full my-5 lg:my-1 bg-[#E0E1E3] p-2 rounded-lg h-[80vh] overflow-y-scroll'>
                     <div className='flex gap-2 items-center py-3'>
                         <h2 className='text-xl pl-2 font-semibold'>Leads</h2>
-                        <span className='bg-[#366FFF] text-[12px] p-1 rounded-full text-white'>{leads && leads.length}</span>
+                        <span className='bg-[#366FFF] text-[12px] p-1 rounded-full text-white'>{not_active && not_active.length}</span>
                     </div>
 
-                    {leads && leads.map((el , index) => {
+                    {not_active && not_active.map((el , index) => {
                         return  <div className='lead-card w-full my-2 rounded-lg shadow-lg p-3 bg-white'>
                         <div className='flex py-2 items-center'>
                             <div>
@@ -51,6 +59,33 @@ const UiCustomers = ({data}) => {
                     </div>
                     })}
                    
+                </div>
+                <div className='lg:w-[33%] w-full my-5 lg:my-1 bg-[#E0E1E3] p-2 rounded-lg h-[80vh] overflow-y-scroll'>
+                    <div className='flex gap-2 items-center py-3'>
+                        <h2 className='text-xl pl-2 font-semibold'>Active Leads</h2>
+                        <span className='bg-[#366FFF] text-[12px] p-1 rounded-full text-white'>{active && active.length}</span>
+                    </div>
+
+                    {active && active.map((el , index) => {
+                        return  <div   key={index} className='lead-card w-full my-2 rounded-lg shadow-lg p-3 bg-white'>
+                        <div className='flex py-2 items-center'>
+                            <div>
+                            <Avatar>
+                                <AvatarImage src="https://static.thenounproject.com/png/1743561-200.png" />
+                                <AvatarFallback>CN</AvatarFallback>
+                            </Avatar>
+                            </div>
+                            <div className='pl-3'>
+                                <h2 className='font-semibold'>{el.name}</h2>
+                                <span>{el.email}</span>
+                            </div>
+                        </div>
+                        <hr />
+                        <div className='py-1 flex items-center justify-end text-end w-full'>
+                            <Link href={`customers/${el._id}`} className='text-[12px] px-4 py-2 bg-[#366FFF] mr-3 rounded-lg shadow-lg text-white cursor-autopointer'>View More</Link>
+                        </div>
+                    </div>
+                    })}
                 </div>
                 <div className='lg:w-[33%] w-full my-5 lg:my-1 bg-[#E0E1E3] p-2 rounded-lg h-[80vh] overflow-y-scroll'>
                     <div className='flex gap-2 items-center py-3'>
@@ -79,12 +114,7 @@ const UiCustomers = ({data}) => {
                     })}
                    
                 </div>
-                <div className='lg:w-[33%] w-full my-5 lg:my-1 bg-[#E0E1E3] p-2 rounded-lg h-[80vh] overflow-y-scroll'>
-                    <div className='flex gap-2 items-center py-3'>
-                        <h2 className='text-xl pl-2 font-semibold'>Customers</h2>
-                        <span className='bg-[#366FFF] text-[12px] p-1 rounded-full text-white'>25</span>
-                    </div>
-                </div>
+               
             </div>
     )
 }

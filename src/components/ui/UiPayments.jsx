@@ -18,12 +18,14 @@ import {
 
 
 
-
 const UiPayments = () => {
 
 
     const [customers , setCustomers] = useState([])
     const [customer , setCustomer] = useState([]);
+
+    const [monthly_total , setMonthlyTotal] = useState(0);
+
 
 
 
@@ -96,6 +98,60 @@ const UiPayments = () => {
     }
 
 
+    const [invoices , setInvoices] = useState([]);
+
+
+    const getInvoices = async () => {
+        try{
+            const res = await axios.get('http://localhost:3000/api/getproposals', {'cache': 'no-store'});
+            setInvoices(res.data.data);
+
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+
+    const [invoice_id , setInvoiceId] = useState('')
+
+    useEffect(() => {
+        getInvoices()
+    },[]);
+
+
+    const submitInvoicePayment = async () => {
+        try{
+            const res = await axios.post('http://localhost:3000/api/invoicepayment', {invoice_id: invoice_id , payment_method: payment_method });
+            console.log(res.data);
+            if(res.status == 200){
+                window.location.reload();
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    const [today_total , setTodayTotal] = useState(0);
+    const [yesterday_total , setYesterdayTotal] = useState(0);
+
+    const [todayDate , setTodayDate] = useState('')
+
+    const getTimeData = () => {
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = ('0' + (today.getMonth() + 1)).slice(-2); 
+        var day = ('0' + today.getDate()).slice(-2); 
+        var formattedDate = year + "-" + month + "-" + day;
+        setTodayDate(formattedDate)
+        if(data){
+            const payments = data.payments;
+        }
+    }
+
+
+    useEffect(() => {
+        getTimeData()
+    },[])
 
     return(
         <div className='w-[95%] mx-auto my-4'>
@@ -103,11 +159,11 @@ const UiPayments = () => {
                 <div className='w-[50%] flex gap-3 '>
                     <div>
                         <span>Total Balance:</span>
-                        <h2 className='text-black font-bolder text-3xl'>€36,254</h2>
+                        <h2 className='text-black font-bolder text-3xl'>€{data.total_balance}</h2>
                     </div>
                     <div className='flex items-center gap-3 pt-6'>
                         <MdArrowOutward className='bg-[#A5F403]  rounded-full' />
-                        <span>€328,32 Today, Feb 15</span>
+                        <span>€{data.today_total_payment} {todayDate}</span>
                     </div>
                 </div>
                 <div className='w-[50%] flex justify-end pt-1'>
@@ -124,59 +180,104 @@ const UiPayments = () => {
                      Shto nje pagese
                     </DialogTitle>
                     <DialogDescription>
-                       <div className='w-full flex-col my-2'>
-                        <label htmlFor="">Name</label>
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
-                       </div>
-                       <div className='w-full flex-col my-2'>
-                        <label htmlFor="">Email</label>
-                        <select name="" value={email} onChange={(e) => setEmail(e.target.value)} id="" className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400'>
-                            <option value="">-</option>
-                            {customers && customers.map((el , index) => {
-                                return  <option key={index} value={el.email}>{el.email}</option>
-                            })}
-                        </select>
-                       </div>
-                       
-                       <div className='w-full flex-col my-2'>
-                        <label htmlFor="">Value</label>
-                        <input type="number" value={value} onChange={(e) => setValue(e.target.value)}    className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
-                       </div>
-                       <div className='w-full flex-col my-2'>
-                        <label htmlFor="">Status</label>
-                        <input type="text"  value={status} onChange={(e) => setStatus(e.target.value)}  className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
-                       </div>
-                       <div className='w-full flex-col my-2'>
-                        <label htmlFor="">Payment Method</label>
-                        <select name="" value={payment_method} onChange={(e) => setPaymentMethod(e.target.value)} id="" className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' >
-                            <option value="">-</option>
-                            <option value="credit_debit">Credit or Debit Card</option>
-                            <option value="apple_pay">Apple Pay</option>
-                            <option value="stripe">Stripe</option>
-                            <option value="paypal">Paypal</option>
-                            <option value="google_pay">Google Pay</option>
-                            <option value="samsung_pay">Samsung Pay</option>
-                            <option value="cryptocurrency">Cryptocurrency</option>
-                            <option value="westernunion">WesternUnion</option>
-                            <option value="other">Other</option>
-                        </select>
-                       </div>
-                       <div className='w-full flex-col my-2'>
-                        <label htmlFor="">Transaction ID</label>
-                        <input type="text" value={transaction_id} onChange={(e) => setTransatctionId(e.target.value)} className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
-                       </div>
-                       <div className='w-full flex-col my-2'>
-                        <label htmlFor="">Tax</label>
-                        <input type="number" value={tax} onChange={(e) => setTax(e.target.value)}  className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
-                       </div>
-                       <div className='w-full flex-col my-2'>
-                        <label htmlFor="">Description</label>
-                        <textarea type="number" value={description} onChange={(e) => setDescription(e.target.value)}  className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400'></textarea>
-                       </div>
-                      
-                       <div className='w-full flex-col my-2'>
-                        <button onClick={submitPayment} className='bg-[#0151CA] w-full text-lg hover:bg-[#023F9B] text-white px-4 py-4 rounded-lg shadow-lg  text-center'>Submit</button>
-                       </div>
+                    <Tabs defaultValue="account" className="w-full">
+                    <TabsList className="bg-white">
+                        <TabsTrigger value="account" className="rounded-none bg-white">Invoice Payment</TabsTrigger>
+                        <TabsTrigger value="password" className="rounded-none bg-white">Other Payment</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="account">
+                        <div>
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Invoice:</label>
+                                            <select  value={invoice_id} onChange={(e) => setInvoiceId(e.target.value)} className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400'>
+                                                <option value="">-</option>
+                                                {invoices && invoices.map((el , index) => {
+                                                    return <option value={el._id} key={index}>{el.subject}</option>
+                                                })}
+                                            </select>
+                                        </div>
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Payment Method</label>
+                                            <select name="" value={payment_method} onChange={(e) => setPaymentMethod(e.target.value)} id="" className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' >
+                                                <option value="">-</option>
+                                                <option value="credit_debit">Credit or Debit Card</option>
+                                                <option value="apple_pay">Apple Pay</option>
+                                                <option value="stripe">Stripe</option>
+                                                <option value="paypal">Paypal</option>
+                                                <option value="google_pay">Google Pay</option>
+                                                <option value="samsung_pay">Samsung Pay</option>
+                                                <option value="cryptocurrency">Cryptocurrency</option>
+                                                <option value="westernunion">WesternUnion</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div className='w-full flex-col my-2'>
+                                            <button onClick={submitInvoicePayment} className='bg-[#0151CA] w-full text-lg hover:bg-[#023F9B] text-white px-4 py-4 rounded-lg shadow-lg  text-center'>Submit</button>
+                                        </div>
+                                        
+
+                        </div>
+                    </TabsContent>
+                    <TabsContent value="password">
+
+                    <div>
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Name</label>
+                                            <input type="text" value={name} onChange={(e) => setName(e.target.value)} className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
+                                        </div>
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Email</label>
+                                            <select name="" value={email} onChange={(e) => setEmail(e.target.value)} id="" className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400'>
+                                                <option value="">-</option>
+                                                {customers && customers.map((el , index) => {
+                                                    return  <option key={index} value={el.email}>{el.email}</option>
+                                                })}
+                                            </select>
+                                        </div>
+                                        
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Value</label>
+                                            <input type="number" value={value} onChange={(e) => setValue(e.target.value)}    className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
+                                        </div>
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Status</label>
+                                            <input type="text"  value={status} onChange={(e) => setStatus(e.target.value)}  className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
+                                        </div>
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Payment Method</label>
+                                            <select name="" value={payment_method} onChange={(e) => setPaymentMethod(e.target.value)} id="" className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' >
+                                                <option value="">-</option>
+                                                <option value="credit_debit">Credit or Debit Card</option>
+                                                <option value="apple_pay">Apple Pay</option>
+                                                <option value="stripe">Stripe</option>
+                                                <option value="paypal">Paypal</option>
+                                                <option value="google_pay">Google Pay</option>
+                                                <option value="samsung_pay">Samsung Pay</option>
+                                                <option value="cryptocurrency">Cryptocurrency</option>
+                                                <option value="westernunion">WesternUnion</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Transaction ID</label>
+                                            <input type="text" value={transaction_id} onChange={(e) => setTransatctionId(e.target.value)} className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
+                                        </div>
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Tax</label>
+                                            <input type="number" value={tax} onChange={(e) => setTax(e.target.value)}  className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400' />
+                                        </div>
+                                        <div className='w-full flex-col my-2'>
+                                            <label htmlFor="">Description</label>
+                                            <textarea type="number" value={description} onChange={(e) => setDescription(e.target.value)}  className='w-full px-4 py-2 focus:outline-none rounded-lg shadow-lg text-lg border-[2px] border-gray-400'></textarea>
+                                        </div>
+                                        
+                                        <div className='w-full flex-col my-2'>
+                                            <button onClick={submitPayment} className='bg-[#0151CA] w-full text-lg hover:bg-[#023F9B] text-white px-4 py-4 rounded-lg shadow-lg  text-center'>Submit</button>
+                                        </div>
+                                        </div>
+                    </TabsContent>
+                    </Tabs>
+                        
                     </DialogDescription>
                     </DialogHeader>
                 </DialogContent>
