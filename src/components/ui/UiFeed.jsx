@@ -41,6 +41,7 @@ import {
 
 
 
+
 const UiFeed = () => {
 
     
@@ -243,7 +244,11 @@ const UiFeed = () => {
         fetchData();
     }, [membersVal, statusVal]);
 
-    const [search , setSearch] = useState('')
+    const [search , setSearch] = useState('');
+
+
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -251,10 +256,9 @@ const UiFeed = () => {
                 const res = await axios.get('http://localhost:3000/api/allusers', { 'cache': 'no-store' });
                 const myData = res.data.data;
     
-                // Apply roleVal filter if it's set
+             
                 const filteredData = roleVal ? myData.filter((el) => el.role === roleVal) : myData;
     
-                // Apply search filter if search is not empty
                 const filteredUsers = search !== '' ?
                     filteredData.filter((el) =>
                         el.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -271,6 +275,30 @@ const UiFeed = () => {
         fetchData();
     }, [roleVal, search]);
 
+
+
+
+    const myId = localStorage.getItem('id');
+
+    const [newStatus , setNewStatus] = useState('');
+
+
+    const updateTaskProgress = async (id) => {
+        try{
+            if(newStatus == 'Select'){
+                alert('Select a valid option');
+                return
+            }
+            const res = await axios.post('http://localhost:3000/api/new_status', {taskId: id , newStatus : newStatus} , {'cache': 'no-store'});
+            console.log(res.data);
+
+            if(res.status == 200){
+                window.location.reload();
+            }
+        }catch(error){
+            console.log(error)
+        }
+    }
 
     return(
         <div className='w-[95%] mx-auto gap-3 lg:flex xl:flex  lg:flex-row flex-col'>
@@ -555,8 +583,9 @@ const UiFeed = () => {
                                     {index + 1}
                                 </button>
                                 <button className='flex gap-1 text-[#2FAF6E] font-semibold items-center p-2 bg-green-500 bg-opacity-[0.2] rounded-lg shadow-lg'>
-                                    <IoCheckmarkSharp color='#2FAF6E' />
-                                    Finished
+                                    {el.progress == '100%' ? (<IoCheckmarkSharp color='#2FAF6E' />)  : (null) }
+                                    
+                                    {el.progress == '100%' ? ('Finished') :  (el.progress) }
                                 </button>
                                 
                             </div>
@@ -578,10 +607,84 @@ const UiFeed = () => {
                             </SheetTrigger>
                             <SheetContent>
                                 <SheetHeader>
-                                <SheetTitle>Are you absolutely sure?</SheetTitle>
+                                <SheetTitle>Task Details</SheetTitle>
                                 <SheetDescription>
-                                    This action cannot be undone. This will permanently delete your account
-                                    and remove your data from our servers.
+                                    <div className='w-full flex pt-3 flex-col'>
+                                        <div className='w-full py-2 font-bolder text-black'>
+                                            <h2 className='text-black font-semibold'>
+                                                Task Name: <span className='bg-[#346FFF] rounded-lg p-1 text-white'>{el.title}</span> 
+                                            </h2>
+                                            
+                                        </div>
+                                        <div className='w-full py-2 font-bolder text-black'>
+                                            <h2 className='text-black font-semibold'>
+                                            Task Status: <span className='bg-[#346FFF] rounded-lg p-1 text-white'> {el.progress}</span>
+                                            </h2>
+                                        </div>
+                                        <div className='w-full py-2 font-bolder text-black'>
+                                            <h2 className='text-black font-semibold'>
+                                            Remaining: <span className='bg-[#346FFF] rounded-lg p-1 text-white'>{getRemainingDays(el.createdAt.substring(0, 10) , el.due_date)} Days </span>
+                                            </h2>
+                                        </div>
+                                        <div className='w-full py-2 font-bolder text-black'>
+                                            <h2 className='text-black font-semibold'>
+                                            Task Assigned <span className='bg-[#346FFF] rounded-lg p-1 text-white'>{el.createdAt.substring(0 ,10)}</span>
+                                            </h2>
+                                        </div>
+                                        <div className='w-full py-2 font-bolder text-black'>
+                                            <h2 className='text-black font-semibold'>
+                                            Memebers:
+                                            </h2>
+                                            <ul>
+                                                <li>
+                                                {users.map((user) => {
+                                         
+                                                    if (el.members.includes(user._id)) {
+                                                        return (
+                                                            <li key={user._id} className='w-full flex items-center bg-white rounded-lg p-2 shadow-lg my-2' >
+                                                                <div className='w-[20%]'>
+                                                                <Avatar>
+                                                                    
+                                                                    <AvatarFallback className="bg-[#346FFF] text-white font-semibold text-lg">{user.name.substring(0 ,1).toUpperCase()}</AvatarFallback>
+                                                                </Avatar>
+                                                                </div>
+                                                                <div className='w-[80%]'>
+                                                                    <p className='font-bold text-lg'>{user.name}</p>
+                                                                    <p>{user.email}</p>
+                                                                </div>
+                                                                
+                                                            </li>
+                                                        );
+                                                    }
+                                                    return null;
+                                                })}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                       
+                                    </div>
+                                            {el.members.includes(myId) ? (<div className='my-[5%]'>
+                                                    <h2 className='py-2 font-semibold text-lg font-semiubold text-black'>
+                                                        Change Status of Task
+                                                    </h2>
+                                                    <h2 className=''>
+                                                       Current Stauts: <span className='bg-[#346FFF] rounded-lg p-1 text-white'>{el.progress}</span> 
+                                                    </h2>
+                                                    <div>
+                                                        <label  htmlFor="" className=' mt-4 font-semibold text-black'>Select the new status of the project:</label>
+                                                        <select value={newStatus} onChange={(e) => setNewStatus(e.target.value)}   className='w-full cursor-pointer mt-5 px-4 py-2 rounded-lg focus:outline-none border-[1px] border-gray-500 shadow-lg'  >
+                                                            <option>Select</option>
+                                                            <option>0%</option>
+                                                            <option>15%</option>
+                                                            <option>30%</option>
+                                                            <option>50%</option>
+                                                            <option>75%</option>
+                                                            <option>100%</option>
+                                                        </select>
+                                                        <button onClick={() => updateTaskProgress(el._id)} className='bg-[#346FFF] text-white my-2 w-full text-center rounded-lg shadow-lg py-3 text-lg'>Submit</button>
+                                                    </div>
+                                    </div>) : (null)}
+                                    
                                 </SheetDescription>
                                 </SheetHeader>
                             </SheetContent>

@@ -135,7 +135,7 @@ const page = ({params}) => {
                 return <tr key={index}>
                 <td className="px-6 py-4 whitespace-nowrap">{el.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                    <Link href={`customers/${el._id}`}>More</Link>
+                    <Link href={`${el._id}`}>More</Link>
                 </td>
                 
               </tr>

@@ -20,7 +20,14 @@ export async function POST(req){
 
 
 
-        const updatedDraft = await DraftModel.findByIdAndUpdate(_id , {status: value} , {new: true})
+
+        if(value == '100%'){
+            const updatedDraft = await DraftModel.findByIdAndUpdate(_id , {status: 'Finished'} , {new: true})
+        }else{
+            const updatedDraft = await DraftModel.findByIdAndUpdate(_id , {status: value} , {new: true})
+        }
+       
+        
 
         if(!updatedDraft){
             return NextResponse.json({msg: 'Draft not found', status: 201})

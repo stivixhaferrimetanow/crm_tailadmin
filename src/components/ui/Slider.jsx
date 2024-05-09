@@ -94,7 +94,7 @@ export default function Slider({data}) {
                 </div>
                 <div className='w-[50%] text-start justify-start pt-1 gap-2 flex items-center'>
                         <MdArrowOutward className='bg-[#A5F403]  rounded-full' />
-                        {data.today_tax_diff > 0 ? (<span className='text-green-600'>+{data.today_tax_diff}€</span>) : (<span className='text-red-600'>{data.today_tax_diff}€</span>)}
+                        {data.today_tax_diff >= 0 ? (<span className='text-green-600'>+{data.today_tax_diff}€</span>) : (<span className='text-red-600'>{data.today_tax_diff}€</span>)}
                 </div>
               </div>
               <div className='w-full flex text-start justify-start'>
