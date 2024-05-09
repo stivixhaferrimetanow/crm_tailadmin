@@ -72,8 +72,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kosto Totale</th>
                     <th scope="col"
                         className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cmimi i Shitjes</th>
-                    <th scope="col"
-                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Production</th>
+                    
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
@@ -107,9 +106,9 @@ const ProductList = ({data , warehouse , stockData}) => {
                                         <td className="px-6 py-4 whitespace-nowrap">€{el.production_cost}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">€{el.total_cost}</td>
                                         <td className="px-6 py-4 whitespace-nowrap">€{el.sales_cost}</td>
-                                        <td className="px-6 py-4 whitespace-nowrap">
+                                        {/* <td className="px-6 py-4 whitespace-nowrap">
                                             <button className='px-4 py-1 rounded-md shadow-lg bg-black text-white' onClick={() => shto(el._id)}>Shto</button>
-                                        </td>
+                                        </td> */}
                                      </tr>
                         })}
                     
