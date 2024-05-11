@@ -300,7 +300,7 @@ const ProductList = ({data , warehouse , stockData}) => {
                       <br />
                       
                       {data && data.filter((el) => el.status == 'Draft').map((el , index) => {
-                        return <Dialog>
+                        return <Dialog >
                         <DialogTrigger>
 
                         <div key={index} className='border-[1px] text-start cursor-pointer bg-black text-white font-semibold relative z-[101] border-white rounded-lg p-4 w-full overflow-hidden text-sm'>
@@ -317,22 +317,29 @@ const ProductList = ({data , warehouse , stockData}) => {
                             </div>
                           </div>
                         </DialogTrigger>
-                        <DialogContent>
+                        <DialogContent className="w-[80%] mx-auto h-[80vh] ">
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
-                            <DialogDescription>
-                              <div className='w-full text-center'>
-                                <h2 className='text-lg py-3'>Ndryshoni fazen e prodhimit</h2>
-                                <Button onClick={() => handleStatusChange(el._id , 'Started')} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button>
-                                <br />
+                            <DialogDescription >
+                              <div className='w-full flex text-center'>
+                                <div className='w-[70%] p-2 text-start'>
+                                  <h2 className='text-black texxt-sm'>Product Unique ID: {el._id}</h2>
+                                  <h1 className='text-3xl py-4 font-semibold'>Production Name: {el.name}</h1>
+                                </div>
+                                <div className='w-[30%] h-full text-start border-l-[2px] p-2 border-[#F7F8FA]'>
+                                  <h2 className='text-lg py-3 text-start'>Ndryshoni fazen e prodhimit</h2>
+                                  <Button onClick={() => handleStatusChange(el._id , 'Started')} variant="outline" className="bg-black text-white hover:bg-black hover:text-white">Next</Button>
+                                  <br />
+                                  
+                                    {timestamps && timestamps.filter((item) => item.item_id == el._id ).map((obj) => {
+                                      return <div className='pt-5'>
+                                        <p className='text-lg bg-blue-500 px-4 py-2 text-white my-1'>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
+                                        <p className='text-lg bg-red-400 px-4 py-2 text-white my-1'>Draft: <span className='font-semibold'>{obj.draft_start_time.substring(0, 10)},{obj.draft_start_time.substring(11, 19)}</span></p>
+                                        
+                                      </div> 
+                                    })}
+                                </div>
                                 
-                                   {timestamps && timestamps.filter((item) => item.item_id == el._id ).map((obj) => {
-                                    return <div className='pt-5'>
-                                       <p className='text-lg '>Ka filluar ne: <span className='font-semibold'>{obj.total_start_time.substring(0 ,10)},{obj.total_start_time.substring(11 ,19)}</span> </p>
-                                      <p className='text-lg'>Draft: <span className='font-semibold'>{obj.draft_start_time.substring(0, 10)},{obj.draft_start_time.substring(11, 19)}</span></p>
-                                      
-                                    </div> 
-                                  })}
                             
                               </div>
                               
